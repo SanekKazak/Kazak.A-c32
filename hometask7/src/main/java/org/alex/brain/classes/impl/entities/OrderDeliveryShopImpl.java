@@ -11,6 +11,6 @@ public class OrderDeliveryShopImpl implements OrderDelivery {
         } else {
             System.out.println("We cannot do this");
         }
-
+        getDeliveryInWindow(order);
     }
 }
