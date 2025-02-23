@@ -1,2 +1,4 @@
 rootProject.name = 'Kazak.A-c32'
+include 'hometask6'
 include 'hometask7'
+
