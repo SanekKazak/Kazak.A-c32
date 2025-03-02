@@ -2,10 +2,7 @@ package org.alex.brain;
 
 import org.alex.brain.employee.Director;
 import org.alex.brain.employee.Worker;
-import org.alex.brain.enums.Role;
 import org.alex.brain.service.EmployeeService;
-
-import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
