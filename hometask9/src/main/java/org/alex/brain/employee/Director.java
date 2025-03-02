@@ -17,8 +17,7 @@ public class Director extends Employee {
     }
 
     public void add(Employee employee){
-        if(employee instanceof Director) {
-            Director director = (Director) employee;
+        if(employee instanceof Director director) {
             Employee[] result = new Employee[this.employeeArray.length + director.getEmployeeArray().length];
             System.arraycopy(director.getEmployeeArray(), 0, result, 0, director.getEmployeeArray().length);
             System.arraycopy(this.employeeArray, 0, result, director.getEmployeeArray().length, employeeArray.length);

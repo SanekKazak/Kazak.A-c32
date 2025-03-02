@@ -18,11 +18,11 @@ public class Main {
         System.out.println(worker2);
         System.out.println(worker3);
         System.out.println(worker4);
-        System.out.println(director.toString());
+        System.out.println(director);
         director.add(worker1);
-        System.out.println(director.toString());
+        System.out.println(director);
         director1.add(director);
-        System.out.println(director1.toString());
+        System.out.println(director1);
         EmployeeService employeeService = new EmployeeService();
         employeeService.getCheckResult(director1, worker1);
         employeeService.getCheckResult(director1, worker2);
