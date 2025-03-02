@@ -1,8 +1,8 @@
 rootProject.name = 'Kazak.A-c32'
 
 include 'hometask2'
+include 'hometask5'
 include 'hometask6'
 include 'hometask7'
 include 'hometask8'
 include 'hometask9'
-
