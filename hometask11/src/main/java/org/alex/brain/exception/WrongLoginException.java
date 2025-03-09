@@ -1,6 +1,5 @@
 package org.alex.brain.exception;
 
-import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
