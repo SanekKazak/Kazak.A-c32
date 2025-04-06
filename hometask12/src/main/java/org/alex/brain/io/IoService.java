@@ -4,14 +4,8 @@ import java.io.File;
 
 public class IoService {
     /*
-    Метод разработан для разделения текста, по двум делителям
-    и создаёт два файла, с содержимым принадлежащим этим частям.
-    Юзабелен для текстовых файлов со структурой типа:
-    ElementA ....
-    ElementB ....
-    ElementA ....
-    и т.д
-        - где, ElementA - keyWord1+[^a-zA-Z0-9], ElementB - keyWord2+[^a-zA-Z0-9]
+    Метод разработан для разделения текста, по двум маркерам
+    и создаёт два файла, с содержимым.
     */
     public static void cutText(File file, String keyWord1, String keyWord2){
         String text = IoCustom.readText(file);
