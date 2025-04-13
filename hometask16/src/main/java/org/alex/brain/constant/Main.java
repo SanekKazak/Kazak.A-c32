@@ -2,20 +2,20 @@ package org.alex.brain.constant;
 
 public class Main {
     public static void main(String[] args) {
-        Test<User> test = new Test<>();
-        test.testConsumer(
+        Service<User> service = new Service<>();
+        service.serviceConsumer(
                 System.out::println,
                 new User("Alex")
         );
-        System.out.println(test.testFunction(
+        System.out.println(service.serviceFunction(
                 us -> Integer.toString(us.toString().length()),
                 new User("John")
         ));
-        System.out.println(test.testPredicate(
+        System.out.println(service.servicePredicate(
                 user -> user.toString().contains("John"),
                 new User("John")
         ));
-        System.out.println(test.testSupplier(
+        System.out.println(service.serviceSupplier(
                 () -> new User("Unknown")
         ));
     }
