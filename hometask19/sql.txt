@@ -1,0 +1,25 @@
+Написать следующие скрипты
+
+1) Создание произвольной таблицы
+create table card (
+payment int,
+name varchar(90)
+);
+2) Удаление данной таблицы
+drop table card;
+3) Вставка записи
+insert into card (payment, name)
+values
+(123, 'mastercard'),
+(2234, 'visa'),
+(353, 'maestro')
+4) Обновление записи
+update card
+set payment = 200
+where payment<150
+5) Получение определенной колонки записей в бд
+select payment
+from card
+6) Удаление всех записей
+delete
+from card
