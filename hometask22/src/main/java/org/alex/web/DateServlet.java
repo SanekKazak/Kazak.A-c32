@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 public class DateServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        System.out.println("Not works");
         PrintWriter writer = resp.getWriter();
         writer.println("time now " + LocalDateTime.now());
     }
