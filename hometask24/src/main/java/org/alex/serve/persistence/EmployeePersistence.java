@@ -1,6 +1,8 @@
-package org.alex.serve.api;
+package org.alex.serve.persistence;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.alex.entity.Employee;
+import org.alex.api.Connect;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -17,11 +19,7 @@ public class EmployeePersistence {
     public void setToken(Employee employee) {
         try (var connection = c.getConnect()){
 
-            if(!c.isExist(employee)){
-                return;
-            }
-
-            PreparedStatement preparedStatement = connection.prepareStatement(
+            var preparedStatement = connection.prepareStatement(
                     "update users set token = ? where login = ?"
             );
             preparedStatement.setString(1, UUID.randomUUID().toString());
@@ -36,10 +34,6 @@ public class EmployeePersistence {
 
     public String getToken(Employee employee) {
         try (var connection = c.getConnect()){
-
-            if(!c.isExist(employee)){
-                return null;
-            }
 
             PreparedStatement preparedStatement = connection.prepareStatement(
                     "select (token) from users where login = ? and password = ?"
@@ -61,14 +55,28 @@ public class EmployeePersistence {
         }
     }
 
+    public String getTokenFromCookies(HttpServletRequest req){
+        var cookies = req.getCookies();
+
+        String token = null;
+
+        for(var cookie : cookies){
+            if(cookie.getName().equals("token")){
+                token = cookie.getValue();
+            }
+        }
+
+        return token;
+    }
+
     public String loginByToken(String token) {
         try (var connection = c.getConnect()){
 
-            if(token == null || token.isEmpty()){
+            if(token.isBlank() || token.isEmpty()){
                 return null;
             }
 
-            PreparedStatement preparedStatement = connection.prepareStatement(
+            var preparedStatement = connection.prepareStatement(
                     "select * from users where token = ?"
             );
             preparedStatement.setString(1, token);
@@ -83,5 +91,42 @@ public class EmployeePersistence {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void createUser(Employee employee) {
+        try (var connection = c.getConnect()){
+
+            var st = connection.prepareStatement(
+                    "INSERT INTO users (login, password) VALUES (?, ?)");
+
+            st.setString(1, employee.getLogin());
+            st.setString(2, employee.getPass());
+
+            st.execute();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean isEmployeeExist(Employee employee){
+        try (var connection = c.getConnect()){
+            var preparedStatement = connection.prepareStatement(
+                    "select * from users where login = ?"
+            );
+
+            preparedStatement.setString(1, employee.getLogin());
+
+            var set = preparedStatement.executeQuery();
+
+            if(set.next()){
+                return true;
+            }else{
+                return false;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

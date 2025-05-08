@@ -1,4 +1,4 @@
-package org.alex.listener;
+package org.alex.serve.listener;
 
 import com.mysql.cj.jdbc.Driver;
 import jakarta.servlet.ServletContextEvent;

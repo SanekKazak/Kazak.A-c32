@@ -15,4 +15,8 @@ public class Employee {
         this.login = login;
         this.pass = pass;
     }
+
+    public Employee(String login) {
+        this.login = login;
+    }
 }
