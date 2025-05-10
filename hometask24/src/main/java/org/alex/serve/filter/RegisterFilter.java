@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.alex.entity.Employee;
 import org.alex.serve.persistence.EmployeePersistence;
+import org.alex.serve.service.PersistenceService;
 
 import java.io.IOException;
 
@@ -16,6 +17,8 @@ public class RegisterFilter extends HttpFilter {
 
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
+        var ps = new PersistenceService();
+
         var login = req.getParameter("login");
         var password = req.getParameter("password");
 
@@ -26,9 +29,7 @@ public class RegisterFilter extends HttpFilter {
             return;
         }
 
-        var ep = new EmployeePersistence();
-
-        var isExist = ep.isEmployeeExist(new Employee(login, password));
+        var isExist = ps.isExist(new Employee(login, password));
 
         if(isExist && req.getRequestURI().equals("/register")){
             res.setStatus(400);

@@ -9,7 +9,9 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.alex.api.RequestController;
 import org.alex.serve.persistence.EmployeePersistence;
+import org.alex.serve.service.AuthService;
 
 import java.io.IOException;
 
@@ -17,8 +19,9 @@ import java.io.IOException;
 public class VoteAuthFilter extends HttpFilter {
     @Override
     public void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
-        var ep = new EmployeePersistence();
-        var token = ep.getTokenFromCookies(req);
+        var rc = new RequestController();
+        var as = new AuthService();
+        var token = rc.getTokenFromCookies(req);
 
         if(token.isBlank() || token.isEmpty()) {
             res.setStatus(400);
@@ -27,7 +30,7 @@ public class VoteAuthFilter extends HttpFilter {
             return;
         }
 
-        if(ep.loginByToken(token)==null){
+        if(as.loginByToken(token)==null){
             var cookie = new Cookie("token", "");
             res.addCookie(cookie);
             res.setStatus(400);

@@ -7,6 +7,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.alex.entity.Employee;
 import org.alex.serve.persistence.EmployeePersistence;
+import org.alex.serve.persistence.Persistence;
+import org.alex.serve.service.PersistenceService;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,11 +18,12 @@ public class RegisterServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        var ps = new PersistenceService();
+
         var login = req.getParameter("login");
         var password = req.getParameter("password");
-        var ep = new EmployeePersistence();
 
-        ep.createUser(new Employee(login, password));
+        ps.create(new Employee(login, password));
 
         PrintWriter out = resp.getWriter();
         out.println("all is good");

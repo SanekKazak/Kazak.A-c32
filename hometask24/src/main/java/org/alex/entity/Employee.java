@@ -2,11 +2,13 @@ package org.alex.entity;
 
 
 import lombok.*;
+import org.alex.serve.persistence.EmployeePersistence;
+import org.alex.serve.persistence.Persistence;
+import org.alex.serve.persistence.PlacePersistence;
 
 @AllArgsConstructor @NoArgsConstructor
 @Getter
-public class Employee {
-    private int id;
+public class Employee extends Entity<Employee> {
     private String name;
     private String login;
     private String pass;
@@ -19,4 +21,6 @@ public class Employee {
     public Employee(String login) {
         this.login = login;
     }
+
+
 }

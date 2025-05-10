@@ -7,8 +7,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.alex.entity.Employee;
 import org.alex.entity.Place;
+import org.alex.entity.Vote;
 import org.alex.serve.persistence.EmployeePersistence;
+import org.alex.serve.persistence.PlacePersistence;
 import org.alex.serve.persistence.VotePersistence;
+import org.alex.serve.service.PersistenceService;
 
 import java.io.IOException;
 
@@ -20,10 +23,18 @@ public class VoteServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        var vote_place = req.getParameter("vote_place");
-        var ep = new EmployeePersistence();
-        var vp = new VotePersistence();
-        var token = ep.getTokenFromCookies(req);
+        var ps = new PersistenceService();
+
+        var place = (Place) req.getAttribute("place_accepted_add");
+        var vote = (Vote) req.getAttribute("vote_accepted_add");
+
+        if(place!=null){
+            ps.create(place);
+        }
+
+        if(vote!=null){
+            ps.create(vote);
+        }
 
     }
 }

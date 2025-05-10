@@ -7,23 +7,22 @@ import org.alex.entity.Vote;
 
 import java.sql.SQLException;
 
-public class PlacePersistence {
+public class PlacePersistence implements Persistence<Place>{
     Connect c;
 
     public PlacePersistence() {
         this.c = new Connect();
     }
 
-    public boolean isVoteExist(Place place) {
+    @Override
+    public boolean isExist(Place place) {
         try (var connection = c.getConnect()){
 
             var preparedStatement = connection.prepareStatement(
-                    "select * from vote " +
-                            "where user_login = ? and place_type = ?"
+                    "select * from places where type = ?"
             );
 
-            preparedStatement.setString(1, place.getSize());
-            preparedStatement.setString(2, place.getType());
+            preparedStatement.setString(1, place.getType());
 
             var set = preparedStatement.executeQuery();
 
@@ -38,14 +37,15 @@ public class PlacePersistence {
         }
     }
 
-    public void createVote(Vote vote) {
+    @Override
+    public void create(Place place) {
         try (var connection = c.getConnect()){
 
             var st = connection.prepareStatement(
-                    "INSERT INTO vote (user_login, place_type) VALUES (?, ?)");
+                    "INSERT INTO places (type, size) VALUES (?, ?)");
 
-            st.setString(1, vote.getEmployee().getLogin());
-            st.setString(2, vote.getPlace().getType());
+            st.setString(1, place.getType());
+            st.setInt(2, place.getSize());
 
             st.execute();
 

@@ -14,6 +14,7 @@ public class ErrorServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         var error = req.getAttribute("error");
+        resp.setStatus(400);
         if (error != null) {
             PrintWriter out = resp.getWriter();
             out.println("<h1>" + error + "</h1>");

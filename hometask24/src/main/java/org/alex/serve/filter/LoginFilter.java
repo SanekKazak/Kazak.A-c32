@@ -6,8 +6,9 @@ import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.alex.api.RequestController;
 import org.alex.entity.Employee;
-import org.alex.serve.persistence.EmployeePersistence;
+import org.alex.serve.service.PersistenceService;
 
 import java.io.IOException;
 
@@ -16,6 +17,9 @@ public class LoginFilter extends HttpFilter {
 
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
+        var ps = new PersistenceService();
+        var rc = new RequestController();
+
         var login = req.getParameter("login");
         var password = req.getParameter("password");
 
@@ -26,15 +30,14 @@ public class LoginFilter extends HttpFilter {
             return;
         }
 
-        var ep = new EmployeePersistence();
-        var token = ep.getTokenFromCookies(req);
+        var token = rc.getTokenFromCookies(req);
 
         if(token!=null){
             res.sendRedirect(req.getContextPath()+"/vote");
             return;
         }
 
-        var isExist = ep.isEmployeeExist(new Employee(login, password));
+        var isExist = ps.isExist(new Employee(login));
 
         if(!isExist && req.getRequestURI().equals("/login")){
             res.setStatus(400);
