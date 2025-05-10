@@ -18,41 +18,15 @@ public class AuthService {
         try (var connection = c.getConnect()){
 
             PreparedStatement preparedStatement = connection.prepareStatement(
-                    "select (token) from employees where login = ? and password = ?"
+                    "select (token) from tokens where employee_login = ?"
             );
 
             preparedStatement.setString(1, employee.getLogin());
-            preparedStatement.setString(2, employee.getPass());
 
             var set = preparedStatement.executeQuery();
 
             if(set.next()){
                 return set.getString("token");
-            }else{
-                return null;
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public String loginByToken(String token) {
-        try (var connection = c.getConnect()){
-
-            if(token.isBlank() || token.isEmpty()){
-                return null;
-            }
-
-            var preparedStatement = connection.prepareStatement(
-                    "select * from employees where token = ?"
-            );
-            preparedStatement.setString(1, token);
-
-            var user = preparedStatement.executeQuery();
-
-            if(user.next()){
-                return user.getString("login");
             }
 
             return null;
@@ -61,11 +35,36 @@ public class AuthService {
         }
     }
 
-    public void setToken(Employee employee) {
+    public String loginByToken(String token) {
+        try (var connection = c.getConnect()){
+
+            if(token==null || token.isEmpty()){
+                return null;
+            }
+
+            var preparedStatement = connection.prepareStatement(
+                    "select employee_login from tokens where token = ?"
+            );
+
+            preparedStatement.setString(1, token);
+
+            var set = preparedStatement.executeQuery();
+
+            if(set.next()){
+                return set.getString("employee_login");
+            }
+
+            return null;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updateToken(Employee employee) {
         try (var connection = c.getConnect()){
 
             var preparedStatement = connection.prepareStatement(
-                    "update employees set token = ? where login = ?"
+                    "update tokens set token = ? where employee_login = ?"
             );
             preparedStatement.setString(1, UUID.randomUUID().toString());
             preparedStatement.setString(2, employee.getLogin());

@@ -6,8 +6,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.alex.entity.Employee;
-import org.alex.serve.persistence.EmployeePersistence;
-import org.alex.serve.persistence.Persistence;
 import org.alex.serve.service.PersistenceService;
 
 import java.io.IOException;

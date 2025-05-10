@@ -7,7 +7,6 @@ import jakarta.servlet.http.HttpFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.alex.entity.Employee;
-import org.alex.serve.persistence.EmployeePersistence;
 import org.alex.serve.service.PersistenceService;
 
 import java.io.IOException;
@@ -22,7 +21,7 @@ public class RegisterFilter extends HttpFilter {
         var login = req.getParameter("login");
         var password = req.getParameter("password");
 
-        if(login.isBlank() || password.isBlank()){
+        if(login==null || login.isEmpty() || password==null || password.isEmpty()){
             res.setStatus(400);
             req.setAttribute("error", "login or password is blank or empty");
             req.getRequestDispatcher("/error").forward(req, res);

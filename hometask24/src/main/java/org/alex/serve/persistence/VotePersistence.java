@@ -1,12 +1,13 @@
 package org.alex.serve.persistence;
 
-import org.alex.entity.Employee;
-import org.alex.entity.Entity;
-import org.alex.entity.Place;
 import org.alex.api.Connect;
+import org.alex.entity.Employee;
+import org.alex.entity.Place;
 import org.alex.entity.Vote;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class VotePersistence implements Persistence<Vote>{
     Connect c;
@@ -28,11 +29,7 @@ public class VotePersistence implements Persistence<Vote>{
 
             var set = preparedStatement.executeQuery();
 
-            if(set.next()){
-                return true;
-            }else{
-                return false;
-            }
+            return set.next();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -51,6 +48,30 @@ public class VotePersistence implements Persistence<Vote>{
 
             st.execute();
 
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<Vote> getAll() {
+        try (var connection = c.getConnect()){
+
+            var votes = new ArrayList<Vote>();
+
+            var st = connection.prepareStatement(
+                    "select * from votes");
+
+            var set = st.executeQuery();
+
+            while(set.next()){
+                votes.add(new Vote(
+                        new Place(set.getString("place_type")),
+                        new Employee(set.getString("employee_login"))
+                ));
+            }
+
+            return votes;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

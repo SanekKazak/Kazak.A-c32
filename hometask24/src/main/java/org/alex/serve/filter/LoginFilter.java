@@ -22,8 +22,9 @@ public class LoginFilter extends HttpFilter {
 
         var login = req.getParameter("login");
         var password = req.getParameter("password");
+        var employee = new Employee(login, password);
 
-        if(login.isBlank() || password.isBlank()){
+        if(login==null || login.isEmpty() || password==null || password.isEmpty()){
             res.setStatus(400);
             req.setAttribute("error", "login or password is blank or empty");
             req.getRequestDispatcher("/error").forward(req, res);
@@ -32,12 +33,12 @@ public class LoginFilter extends HttpFilter {
 
         var token = rc.getTokenFromCookies(req);
 
-        if(token!=null){
+        if(token!=null && !token.isEmpty()){
             res.sendRedirect(req.getContextPath()+"/vote");
             return;
         }
 
-        var isExist = ps.isExist(new Employee(login));
+        var isExist = ps.isExist(employee);
 
         if(!isExist && req.getRequestURI().equals("/login")){
             res.setStatus(400);

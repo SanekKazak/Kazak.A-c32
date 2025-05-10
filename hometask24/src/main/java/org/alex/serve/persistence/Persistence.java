@@ -1,10 +1,11 @@
 package org.alex.serve.persistence;
 
-import org.alex.entity.Entity;
+import java.util.List;
 
 public interface Persistence<R>{
     void create(R entity);
     boolean isExist(R entity);
+    List<R> getAll();
 }
 
 
