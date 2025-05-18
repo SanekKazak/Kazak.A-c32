@@ -1,0 +1,27 @@
+.course-block {
+    border: 1px solid black;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 2rem;
+}
+
+.course-block ul {
+    list-style: none;
+}
+
+.course-block ul li {
+    margin-bottom: 0.5rem;
+}
+
+.course-block ul li a {
+    text-decoration: none;
+    color: #250dfd;
+}
+
+.course-block ul li a:hover {
+    text-decoration: underline;
+}
+
+.course-block ul li a:visited {
+    color: #6c757d;
+}
