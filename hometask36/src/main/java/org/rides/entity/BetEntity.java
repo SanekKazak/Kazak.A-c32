@@ -41,4 +41,5 @@ public class BetEntity {
         this.bet = bet;
         this.created = created;
     }
+
 }

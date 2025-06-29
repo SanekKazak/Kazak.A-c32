@@ -1,4 +1,22 @@
 package org.rides.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.time.Instant;
+import java.util.UUID;
+
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class BetDto {
+    private UUID id;
+    private UUID playerId;
+    private UUID horseId;
+    private Integer bet;
+    private Instant created;
+
 }
