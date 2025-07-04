@@ -27,11 +27,16 @@ public class HorsePersistenceServiceImpl implements HorsePersistenceService {
         var session = factory.openSession();
         var transaction = session.beginTransaction();
 
-
+        var entity = session.createQuery(
+                        "from HorseEntity " +
+                                "where name =: name"
+                        , HorseEntity.class)
+                .setParameter("name", name)
+                .getSingleResult();
 
         transaction.commit();
         session.close();
-        return null;
+        return entity;
     }
 
     @Override
@@ -39,11 +44,15 @@ public class HorsePersistenceServiceImpl implements HorsePersistenceService {
         var session = factory.openSession();
         var transaction = session.beginTransaction();
 
-        HorseEntity entity = session.find(HorseEntity.class, id);
+        var entity = session.createQuery(
+                        "from HorseEntity " +
+                                "where id =: id"
+                        , HorseEntity.class)
+                .setParameter("id", id)
+                .getSingleResult();
 
         transaction.commit();
         session.close();
-
         return entity;
     }
 
@@ -52,12 +61,14 @@ public class HorsePersistenceServiceImpl implements HorsePersistenceService {
         var session = factory.openSession();
         var transaction = session.beginTransaction();
 
-        List<HorseEntity> entities = session.createQuery("from HorseEntity", HorseEntity.class)
-                .getResultList();
+        List<HorseEntity> resultList = session.createQuery(
+                        "from HorseEntity",
+                HorseEntity.class
+        ).getResultList();
 
         transaction.commit();
         session.close();
-        return entities;
+        return resultList;
     }
 
     @Override

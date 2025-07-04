@@ -10,6 +10,7 @@ import java.util.UUID;
 
 public class BetPersistenceServiceImpl implements BetPersistenceService {
     private static final SessionFactory factory = PersistenceService.getPersistence();
+
     @Override
     public void create(BetEntity entity) {
         var session = factory.openSession();
@@ -26,7 +27,7 @@ public class BetPersistenceServiceImpl implements BetPersistenceService {
         var session = factory.openSession();
         var transaction = session.beginTransaction();
 
-        BetEntity entity = session.createQuery("select b " +
+        BetEntity entity = session.createQuery(
                                 "from BetEntity b " +
                                 "left join fetch b.horse " +
                                 "left join fetch b.player " +
@@ -45,7 +46,7 @@ public class BetPersistenceServiceImpl implements BetPersistenceService {
         var session = factory.openSession();
         var transaction = session.beginTransaction();
 
-        List<BetEntity> resultList = session.createQuery("select b " +
+        List<BetEntity> resultList = session.createQuery(
                                 "from BetEntity b " +
                                 "left join fetch b.horse " +
                                 "left join fetch b.player ",
@@ -74,11 +75,9 @@ public class BetPersistenceServiceImpl implements BetPersistenceService {
         var transaction = session.beginTransaction();
 
         BetEntity entity = read(id);
-
         session.remove(entity);
 
         transaction.commit();
         session.close();
-
     }
 }

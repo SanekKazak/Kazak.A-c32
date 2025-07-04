@@ -14,7 +14,13 @@ public class PlayerPersistenceServiceImpl implements PlayerPersistenceService {
     private static final SessionFactory factory = PersistenceService.getPersistence();
     @Override
     public void create(PlayerEntity entity) {
+        Session session = factory.openSession();
+        Transaction transaction = session.beginTransaction();
 
+        session.persist(entity);
+
+        transaction.commit();
+        session.close();
     }
 
     @Override
@@ -22,8 +28,11 @@ public class PlayerPersistenceServiceImpl implements PlayerPersistenceService {
         Session session = factory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        var entity  = session.createQuery ("from PlayerEntity p " +
-                        "where login =: login",
+        var entity = session.createQuery(
+                        "from PlayerEntity p " +
+                                "left join fetch p.bet b " +
+                                "left join fetch b.horse " +
+                                "where p.login =: login",
                         PlayerEntity.class)
                 .setParameter("login", login)
                 .getSingleResult();
@@ -35,7 +44,21 @@ public class PlayerPersistenceServiceImpl implements PlayerPersistenceService {
 
     @Override
     public PlayerEntity read(UUID id) {
-        return null;
+        var session = factory.openSession();
+        var transaction = session.beginTransaction();
+
+        var entity = session.createQuery(
+                        "from PlayerEntity p " +
+                                "left join fetch p.bet b " +
+                                "left join fetch b.horse " +
+                                "where p.id =: id",
+                        PlayerEntity.class)
+                .setParameter("id", id)
+                .getSingleResult();
+
+        transaction.commit();
+        session.close();
+        return entity;
     }
 
     @Override
@@ -43,18 +66,16 @@ public class PlayerPersistenceServiceImpl implements PlayerPersistenceService {
         Session session = factory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        var entity  = session.createQuery ("select p " +
-                                "from PlayerEntity p " +
+        var entities = session.createQuery(
+                        "from PlayerEntity p " +
                                 "left join fetch p.bet b " +
-                                "left join fetch b.horse " +
-                                "where login =: login",
+                                "left join fetch b.horse",
                         PlayerEntity.class)
-                .setParameter("login", login)
-                .getSingleResult();
+                .getResultList();
 
         transaction.commit();
         session.close();
-        return List.of();
+        return entities;
     }
 
     @Override

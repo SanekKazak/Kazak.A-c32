@@ -43,4 +43,10 @@ public class HorseEntity {
         this.avgSpeed = avgSpeed;
         this.name = name;
     }
+
+    public HorseEntity(UUID id, Double avgSpeed, String name) {
+        this.id = id;
+        this.avgSpeed = avgSpeed;
+        this.name = name;
+    }
 }

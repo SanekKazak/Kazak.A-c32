@@ -43,7 +43,7 @@ public class PlayerEntity {
     @UpdateTimestamp
     private Instant updated;
 
-    public PlayerEntity(String login, String password, Integer balance) {
+    public PlayerEntity(@Unique String login, String password, Integer balance) {
         this.login = login;
         this.password = password;
         this.balance = balance;
