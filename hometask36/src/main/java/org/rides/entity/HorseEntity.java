@@ -1,25 +1,25 @@
 package org.rides.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.UuidGenerator;
+import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-
-@Entity(name = "horse")
+@Table(name = "Horse")
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString(exclude = {"bet"})
+@Component
 public class HorseEntity {
     @Id
     @UuidGenerator
@@ -31,7 +31,7 @@ public class HorseEntity {
     @OneToMany(
             mappedBy = "horse",
             cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER
+            fetch = FetchType.LAZY
     )
     private List<BetEntity> bet = new ArrayList<>();
     @CreationTimestamp

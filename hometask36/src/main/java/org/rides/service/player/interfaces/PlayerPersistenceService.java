@@ -7,9 +7,9 @@ import java.util.UUID;
 
 public interface PlayerPersistenceService {
     void create(PlayerEntity entity);
-    void read(String login);
-    void read(UUID id);
+    PlayerEntity read(String login);
+    PlayerEntity read(UUID id);
     List<PlayerEntity> readAll();
     void update(PlayerEntity entity);
-    void delete(PlayerEntity entity);
+    void delete(UUID id);
 }
