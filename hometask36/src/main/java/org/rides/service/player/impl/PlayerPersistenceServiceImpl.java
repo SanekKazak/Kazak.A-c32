@@ -6,10 +6,12 @@ import org.hibernate.Transaction;
 import org.rides.config.PersistenceService;
 import org.rides.entity.PlayerEntity;
 import org.rides.service.player.interfaces.PlayerPersistenceService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
+@Service
 public class PlayerPersistenceServiceImpl implements PlayerPersistenceService {
     private static final SessionFactory factory = PersistenceService.getPersistence();
     @Override

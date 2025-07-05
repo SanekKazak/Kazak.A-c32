@@ -1,5 +1,6 @@
 package org.rides.mapper.bet;
 
+import org.mapstruct.AnnotateWith;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
@@ -7,11 +8,13 @@ import org.rides.dto.BetDto;
 import org.rides.entity.BetEntity;
 import org.rides.entity.HorseEntity;
 import org.rides.entity.PlayerEntity;
+import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.ERROR,
         componentModel = "spring")
+@AnnotateWith(value = Service.class)
 public interface BetMapper {
     @Mapping(target = "id", source = "id")
     @Mapping(target = "playerId", source = "player")

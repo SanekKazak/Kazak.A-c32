@@ -1,5 +1,7 @@
 package org.rides.service.bet.interfaces;
 
+import java.util.UUID;
+
 public interface BetResultService {
-    void getResult();
+    Boolean resloveResult(UUID id);
 }

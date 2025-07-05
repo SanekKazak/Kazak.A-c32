@@ -4,10 +4,12 @@ import org.hibernate.SessionFactory;
 import org.rides.config.PersistenceService;
 import org.rides.entity.HorseEntity;
 import org.rides.service.horse.interfaces.HorsePersistenceService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
+@Service
 public class HorsePersistenceServiceImpl implements HorsePersistenceService {
     private static final SessionFactory factory = PersistenceService.getPersistence();
 

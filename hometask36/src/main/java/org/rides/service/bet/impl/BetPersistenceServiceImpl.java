@@ -4,10 +4,12 @@ import org.hibernate.SessionFactory;
 import org.rides.config.PersistenceService;
 import org.rides.entity.BetEntity;
 import org.rides.service.bet.interfaces.BetPersistenceService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
+@Service
 public class BetPersistenceServiceImpl implements BetPersistenceService {
     private static final SessionFactory factory = PersistenceService.getPersistence();
 

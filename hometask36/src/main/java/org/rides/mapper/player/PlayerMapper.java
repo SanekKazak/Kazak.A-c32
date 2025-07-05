@@ -1,17 +1,20 @@
 package org.rides.mapper.player;
 
+import org.mapstruct.AnnotateWith;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.rides.dto.PlayerDto;
 import org.rides.entity.BetEntity;
 import org.rides.entity.PlayerEntity;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.ERROR,
         componentModel = "spring")
+@AnnotateWith(value = Service.class)
 public interface PlayerMapper {
     @Mapping(target = "id", source = "id")
     @Mapping(target = "login", source = "login")
