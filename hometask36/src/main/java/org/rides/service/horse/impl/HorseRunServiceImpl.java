@@ -4,24 +4,22 @@ import org.rides.entity.HorseEntity;
 import org.rides.service.horse.interfaces.HorseRunService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Random;
 
 @Service
 public class HorseRunServiceImpl implements HorseRunService {
-    private HorsePersistenceServiceImpl persistenceService;
-
-    public HorseRunServiceImpl(HorsePersistenceServiceImpl persistenceService) {
-        this.persistenceService = persistenceService;
-    }
 
     @Override
-    public void speedMeasure(HorseEntity horse) {
+    public List<HorseEntity> measureHorsesSpeed(List<HorseEntity> horses) {
         Random random = new Random();
-        var i = random.nextDouble(500);
-        var i1 = random.nextDouble(300);
-        var result = i + i1;
 
-        horse.setAvgSpeed(result);
-        persistenceService.update(horse);
+        return horses.stream()
+                .peek(horse -> {
+                    var randomResult = random.nextDouble(500);
+                    var randomResult1 = random.nextDouble(300);
+                    var result = randomResult + randomResult1;
+                    horse.setAvgSpeed(result);
+                }).toList();
     }
 }

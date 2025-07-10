@@ -2,11 +2,10 @@ package org.rides.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.checkerframework.common.aliasing.qual.Unique;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.UuidGenerator;
-import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -17,35 +16,45 @@ import java.util.UUID;
 @Table(name = "Player")
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
+@Getter @Setter
 @ToString(exclude = {"bet"})
-@Component
 public class PlayerEntity {
     @Id
     @UuidGenerator
     private UUID id;
+    @Column(name = "token")
+    private UUID token;
     @OneToMany(
             mappedBy = "player",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
     private List<BetEntity> bet = new ArrayList<>();
-    @Column(name="login")
-    @Unique
+    @Column(name="login", unique = true, nullable = false)
     private String login;
-    @Column(name="password")
+    @Column(name="password", nullable = false)
     private String password;
-    @Column(name="balance")
+    @Column(name="balance", nullable = false)
+    @ColumnDefault("0")
     private Integer balance;
     @CreationTimestamp
     private Instant created;
     @UpdateTimestamp
     private Instant updated;
 
-    public PlayerEntity(@Unique String login, String password, Integer balance) {
+    public PlayerEntity(String login, String password, Integer balance) {
         this.login = login;
         this.password = password;
         this.balance = balance;
+    }
+
+    public void setBet(List<BetEntity> entity){
+        bet.addAll(entity);
+        entity.forEach(bet->bet.setPlayer(this));
+    }
+
+    public void removeBet(BetEntity entity){
+        bet.remove(entity);
+        entity.setPlayer(null);
     }
 }

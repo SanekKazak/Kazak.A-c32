@@ -19,7 +19,8 @@ public interface PlayerMapper {
     @Mapping(target = "id", source = "id")
     @Mapping(target = "login", source = "login")
     @Mapping(target = "balance", source = "balance")
-    @Mapping(target = "bet", source = "bets")
+    @Mapping(target = "bet", source = "betsId")
+    @Mapping(target = "token", source = "token")
     @Mapping(target = "created", ignore = true)
     @Mapping(target = "updated", ignore = true)
     @Mapping(target = "password", ignore = true)
@@ -28,7 +29,8 @@ public interface PlayerMapper {
     @Mapping(target = "id", source = "id")
     @Mapping(target = "login", source = "login")
     @Mapping(target = "balance", source = "balance")
-    @Mapping(target = "bets", source = "bet")
+    @Mapping(target = "betsId", source = "bet")
+    @Mapping(target = "token", source = "token")
     @Mapping(target = "registrationTime", source = "created")
     PlayerDto toDto(PlayerEntity entity);
 

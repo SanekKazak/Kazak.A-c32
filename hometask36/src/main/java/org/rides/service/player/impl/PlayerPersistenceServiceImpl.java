@@ -13,7 +13,12 @@ import java.util.UUID;
 
 @Service
 public class PlayerPersistenceServiceImpl implements PlayerPersistenceService {
-    private static final SessionFactory factory = PersistenceService.getPersistence();
+    private final SessionFactory factory;
+
+    public PlayerPersistenceServiceImpl(PersistenceService service) {
+        factory = service.getFactory();
+    }
+
     @Override
     public void create(PlayerEntity entity) {
         Session session = factory.openSession();

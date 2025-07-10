@@ -11,5 +11,6 @@ public interface HorsePersistenceService {
     HorseEntity read(UUID id);
     List<HorseEntity> readAll();
     void update(HorseEntity entity);
+    void update(List<HorseEntity> horses);
     void delete(UUID id);
 }

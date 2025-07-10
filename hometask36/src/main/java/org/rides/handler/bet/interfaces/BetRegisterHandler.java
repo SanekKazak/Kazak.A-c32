@@ -1,7 +1,7 @@
 package org.rides.handler.bet.interfaces;
 
-import org.rides.entity.BetEntity;
+import org.rides.dto.BetDto;
 
 public interface BetRegisterHandler {
-    void handle(BetEntity entity);
+    void handle(BetDto dto);
 }

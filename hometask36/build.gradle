@@ -11,10 +11,9 @@ repositories {
 
 dependencies {
     implementation 'org.springframework:spring-context:6.2.8'
-    implementation 'org.mariadb.jdbc:mariadb-java-client:3.3.3'
-    implementation 'com.mysql:mysql-connector-j:9.3.0'
     implementation 'org.mapstruct:mapstruct:1.6.3'
     implementation 'org.hibernate.orm:hibernate-core:7.0.4.Final'
+    implementation 'org.postgresql:postgresql:42.7.7'
 
     annotationProcessor 'org.projectlombok:lombok:1.18.30'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'

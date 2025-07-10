@@ -1,7 +1,7 @@
 package org.rides.handler.player.interfaces;
 
-import org.rides.entity.PlayerEntity;
+import org.rides.dto.PlayerCredentialsDto;
 
 public interface PlayerRegisterHandler {
-    void handle(PlayerEntity entity);
+    Boolean register(PlayerCredentialsDto dto);
 }

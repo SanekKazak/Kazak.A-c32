@@ -16,7 +16,8 @@ import java.util.UUID;
 public class PlayerDto {
     private UUID id;
     private String login;
-    private List<UUID> bets;
+    private UUID token;
+    private List<UUID> betsId;
     private Integer balance;
     private Instant registrationTime;
 }

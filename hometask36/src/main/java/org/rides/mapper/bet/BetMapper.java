@@ -7,6 +7,7 @@ import org.mapstruct.ReportingPolicy;
 import org.rides.dto.BetDto;
 import org.rides.entity.BetEntity;
 import org.rides.entity.HorseEntity;
+import org.rides.entity.MatchEntity;
 import org.rides.entity.PlayerEntity;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,8 @@ public interface BetMapper {
     @Mapping(target = "playerId", source = "player")
     @Mapping(target = "horseId", source = "horse")
     @Mapping(target = "bet", source = "bet")
+    @Mapping(target = "matchId", source = "match")
+    @Mapping(target = "result", source = "result")
     @Mapping(target = "created", source = "created")
     BetDto toDto(BetEntity entity);
 
@@ -27,6 +30,8 @@ public interface BetMapper {
     @Mapping(target = "player", source = "playerId")
     @Mapping(target = "horse", source = "horseId")
     @Mapping(target = "bet", source = "bet")
+    @Mapping(target = "match", source = "matchId")
+    @Mapping(target = "result", source = "result")
     @Mapping(target = "created", source = "created")
     @Mapping(target = "updated", ignore = true)
     BetEntity toEntity(BetDto dto);
@@ -39,7 +44,15 @@ public interface BetMapper {
         entity.setId(id);
         return entity;
     }
-    default UUID fromHorseToid(HorseEntity entity){
+    default UUID fromMatchToId(MatchEntity entity){
+        return entity.getId();
+    }
+    default MatchEntity fromIdToMatch(UUID id){
+        var entity = new MatchEntity();
+        entity.setId(id);
+        return entity;
+    }
+    default UUID fromHorseToId(HorseEntity entity){
         return entity.getId();
     }
     default HorseEntity fromIdToHorse(UUID id){

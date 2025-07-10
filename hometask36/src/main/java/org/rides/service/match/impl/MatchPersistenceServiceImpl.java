@@ -1,24 +1,23 @@
-package org.rides.service.bet.impl;
+package org.rides.service.match.impl;
 
 import org.hibernate.SessionFactory;
 import org.rides.config.PersistenceService;
-import org.rides.entity.BetEntity;
-import org.rides.service.bet.interfaces.BetPersistenceService;
+import org.rides.entity.MatchEntity;
+import org.rides.service.match.interfaces.MatchPersistenceService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
 @Service
-public class BetPersistenceServiceImpl implements BetPersistenceService {
+public class MatchPersistenceServiceImpl implements MatchPersistenceService {
     private final SessionFactory factory;
 
-    public BetPersistenceServiceImpl(PersistenceService service) {
+    public MatchPersistenceServiceImpl(PersistenceService service) {
         factory = service.getFactory();
     }
-
     @Override
-    public void create(BetEntity entity) {
+    public void create(MatchEntity entity) {
         var session = factory.openSession();
         var transaction = session.beginTransaction();
 
@@ -29,16 +28,16 @@ public class BetPersistenceServiceImpl implements BetPersistenceService {
     }
 
     @Override
-    public BetEntity read(UUID id) {
+    public MatchEntity read(UUID id) {
         var session = factory.openSession();
         var transaction = session.beginTransaction();
 
-        BetEntity entity = session.createQuery(
-                                "from BetEntity b " +
-                                "left join fetch b.horse " +
-                                "left join fetch b.player " +
-                                "where b.id =: id ",
-                        BetEntity.class)
+        var entity = session.createQuery(
+                        "from MatchEntity m " +
+                                "left join fetch m.horse " +
+                                "left join fetch m.bet " +
+                                "where m.id =: id",
+                        MatchEntity.class)
                 .setParameter("id", id)
                 .getSingleResult();
 
@@ -48,15 +47,15 @@ public class BetPersistenceServiceImpl implements BetPersistenceService {
     }
 
     @Override
-    public List<BetEntity> readAll() {
+    public List<MatchEntity> readAll() {
         var session = factory.openSession();
         var transaction = session.beginTransaction();
 
-        List<BetEntity> resultList = session.createQuery(
-                                "from BetEntity b " +
-                                "left join fetch b.horse " +
-                                "left join fetch b.player ",
-                        BetEntity.class)
+        List<MatchEntity> resultList = session.createQuery(
+                        "from MatchEntity m " +
+                                "left join fetch m.horse " +
+                                "left join fetch m.bet ",
+                        MatchEntity.class)
                 .getResultList();
 
         transaction.commit();
@@ -65,7 +64,7 @@ public class BetPersistenceServiceImpl implements BetPersistenceService {
     }
 
     @Override
-    public void update(BetEntity entity) {
+    public void update(MatchEntity entity) {
         var session = factory.openSession();
         var transaction = session.beginTransaction();
 
@@ -80,7 +79,7 @@ public class BetPersistenceServiceImpl implements BetPersistenceService {
         var session = factory.openSession();
         var transaction = session.beginTransaction();
 
-        BetEntity entity = read(id);
+        MatchEntity entity = read(id);
         session.remove(entity);
 
         transaction.commit();

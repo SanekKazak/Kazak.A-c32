@@ -11,7 +11,11 @@ import java.util.UUID;
 
 @Service
 public class HorsePersistenceServiceImpl implements HorsePersistenceService {
-    private static final SessionFactory factory = PersistenceService.getPersistence();
+    private final SessionFactory factory;
+
+    public HorsePersistenceServiceImpl(PersistenceService service) {
+        factory = service.getFactory();
+    }
 
     @Override
     public void create(HorseEntity entity) {
@@ -85,6 +89,17 @@ public class HorsePersistenceServiceImpl implements HorsePersistenceService {
     }
 
     @Override
+    public void update(List<HorseEntity> horses) {
+        var session = factory.openSession();
+        var transaction = session.beginTransaction();
+
+        horses.forEach(session::merge);
+
+        transaction.commit();
+        session.close();
+    }
+
+    @Override
     public void delete(UUID id) {
         var session = factory.openSession();
         var transaction = session.beginTransaction();
@@ -94,6 +109,5 @@ public class HorsePersistenceServiceImpl implements HorsePersistenceService {
 
         transaction.commit();
         session.close();
-
     }
 }

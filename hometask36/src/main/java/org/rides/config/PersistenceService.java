@@ -1,33 +1,30 @@
 package org.rides.config;
 
+import lombok.Getter;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.rides.entity.BetEntity;
 import org.rides.entity.HorseEntity;
+import org.rides.entity.MatchEntity;
 import org.rides.entity.PlayerEntity;
+import org.springframework.stereotype.Service;
 
+@Service
+@Getter
 public class PersistenceService {
-    private static SessionFactory factory;
-    private PersistenceService(){
-    }
-    public static SessionFactory getPersistence(){
-        if(factory == null){
-            synchronized (PersistenceService.class){
-                if(factory == null){
-                    var properties = PersonalProperty.getProperties();
+    private final SessionFactory factory;
 
-                    var configuration = new Configuration();
+    public PersistenceService(){
+        var configuration = new Configuration();
+        var properties = PersonalProperty.getProperties();
 
-                    configuration
-                            .addAnnotatedClass(BetEntity.class)
-                            .addAnnotatedClass(HorseEntity.class)
-                            .addAnnotatedClass(PlayerEntity.class)
-                            .addProperties(properties);
+        configuration
+                .addAnnotatedClass(BetEntity.class)
+                .addAnnotatedClass(HorseEntity.class)
+                .addAnnotatedClass(PlayerEntity.class)
+                .addAnnotatedClass(MatchEntity.class)
+                .addProperties(properties);
 
-                    return configuration.buildSessionFactory();
-                }
-            }
-        }
-        return factory;
+        factory = configuration.buildSessionFactory();
     }
 }
