@@ -12,4 +12,5 @@ public interface PlayerPersistenceService {
     List<PlayerEntity> readAll();
     void update(PlayerEntity entity);
     void delete(UUID id);
+
 }

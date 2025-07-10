@@ -17,6 +17,7 @@ public interface PlayerCredentialsMapper {
     @Mapping(target = "token", ignore = true)
     @Mapping(target = "balance", ignore = true)
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "role", ignore = true)
     @Mapping(target = "bet", ignore = true)
     @Mapping(target = "created", ignore = true)
     @Mapping(target = "updated", ignore = true)

@@ -1,46 +1,57 @@
 package org.rides.service.player.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.rides.config.BackendErrorExceptionProxy;
 import org.rides.entity.PlayerEntity;
 import org.rides.service.player.interfaces.PlayerCredentialsValidatorService;
 import org.rides.service.player.interfaces.PlayerPersistenceService;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class PlayerCredentialsValidatorServiceImpl implements PlayerCredentialsValidatorService {
     private final PlayerPersistenceService persistenceService;
     @Override
-    public List<Exception> validate(PlayerEntity entity) {
-        var errors = new ArrayList<Exception>();
+    public BackendErrorExceptionProxy validate(PlayerEntity entity) {
+        var errors = new BackendErrorExceptionProxy();
         String password = entity.getPassword();
         String login = entity.getLogin();
         if(password ==null || password.isBlank()){
-            errors.add(new Exception("Password is empty"));
+            errors.addError("password", "null password");
         }
         if(password ==null || password.isBlank()){
-            errors.add(new Exception("Login is empty"));
+            errors.addError("login", "null login");
         }
         return errors;
     }
 
     @Override
-    public List<Exception> validateAuthorization(PlayerEntity entity) {
-        List<Exception> validate = validate(entity);
+    public BackendErrorExceptionProxy validateAuthorization(PlayerEntity entity) {
+        var errors = validate(entity);
 
-        if(!validate.isEmpty()){
-            return validate;
+        try {
+            persistenceService.read(entity.getLogin());
+        }catch (Exception e){
+            errors.addError("login", e.getMessage());
         }
 
-        PlayerEntity entity1 = persistenceService.read(entity.getLogin());
-        return List.of();
+        return errors;
     }
 
     @Override
-    public List<Exception> validateRegistration(PlayerEntity entity) {
-        return List.of();
+    public BackendErrorExceptionProxy validateRegistration(PlayerEntity entity) {
+        var errors = validate(entity);
+
+        if(entity.getPassword().length()<4){
+            errors.addError("password", "password to low");
+        }
+
+        PlayerEntity exist = persistenceService.read(entity.getLogin());
+
+        if(exist!=null){
+            errors.addError("login", "login already exist");
+        }
+
+        return errors;
     }
 }

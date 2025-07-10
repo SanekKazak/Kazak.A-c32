@@ -17,7 +17,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter @Setter
-@ToString(exclude = {"bet"})
+@ToString(exclude = "bet")
 public class PlayerEntity {
     @Id
     @UuidGenerator
@@ -32,20 +32,23 @@ public class PlayerEntity {
     private List<BetEntity> bet = new ArrayList<>();
     @Column(name="login", unique = true, nullable = false)
     private String login;
-    @Column(name="password", nullable = false)
+    @Column(name="password")
     private String password;
-    @Column(name="balance", nullable = false)
+    @Column(name="balance")
     @ColumnDefault("0")
     private Integer balance;
+    @Enumerated(value = EnumType.STRING)
+    @ColumnDefault("'USER'")
+    @Column(name = "role", nullable = false)
+    private RoleType role = RoleType.USER;
     @CreationTimestamp
     private Instant created;
     @UpdateTimestamp
     private Instant updated;
 
-    public PlayerEntity(String login, String password, Integer balance) {
+    public PlayerEntity(String login, String password) {
         this.login = login;
         this.password = password;
-        this.balance = balance;
     }
 
     public void setBet(List<BetEntity> entity){
@@ -56,5 +59,10 @@ public class PlayerEntity {
     public void removeBet(BetEntity entity){
         bet.remove(entity);
         entity.setPlayer(null);
+    }
+
+    public enum RoleType{
+        ADMIN,
+        USER
     }
 }

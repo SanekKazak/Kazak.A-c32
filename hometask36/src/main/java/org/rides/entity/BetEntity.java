@@ -39,8 +39,9 @@ public class BetEntity {
     @Column(name = "bet")
     private Integer bet;
     @Enumerated(value = EnumType.STRING)
+    @Column(name = "result", nullable = false)
     @ColumnDefault("'PROCESS'")
-    private ResultType result;
+    private ResultType result = ResultType.PROCESS;
     @CreationTimestamp
     private Instant created;
     @UpdateTimestamp
@@ -60,5 +61,4 @@ public class BetEntity {
         LOSE,
         PROCESS
     }
-
 }

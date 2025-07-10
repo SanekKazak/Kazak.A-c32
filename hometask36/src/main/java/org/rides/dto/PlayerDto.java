@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.rides.entity.PlayerEntity;
 
 import java.time.Instant;
 import java.util.List;
@@ -18,6 +19,7 @@ public class PlayerDto {
     private String login;
     private UUID token;
     private List<UUID> betsId;
+    private PlayerEntity.RoleType role;
     private Integer balance;
     private Instant registrationTime;
 }

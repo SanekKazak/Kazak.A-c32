@@ -1,21 +1,19 @@
 package org.rides.service.player.impl;
 
+import org.rides.config.BackendErrorExceptionProxy;
 import org.rides.entity.PlayerEntity;
 import org.rides.service.player.interfaces.PlayerBalanceValidationService;
-import org.rides.service.player.interfaces.PlayerPersistenceService;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PlayerBalanceValidationServiceImpl implements PlayerBalanceValidationService {
-    private PlayerPersistenceService persistenceService;
-
-    public PlayerBalanceValidationServiceImpl(PlayerPersistenceService persistenceService) {
-        this.persistenceService = persistenceService;
-    }
-
     @Override
-    public Boolean validate(PlayerEntity entity, Integer delta) {
+    public BackendErrorExceptionProxy validate(PlayerEntity entity, Integer delta) {
         Integer balance = entity.getBalance();
-        return (balance-delta)>0;
+        var errors = new BackendErrorExceptionProxy();
+        if((balance-delta)>0){
+            errors.addError("balance", "you dont have such money");
+        }
+        return errors;
     }
 }

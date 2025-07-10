@@ -6,7 +6,7 @@ import org.rides.dto.PlayerDto;
 import org.rides.entity.PlayerEntity;
 import org.rides.handler.player.interfaces.PlayerAuthorizationHandler;
 import org.rides.mapper.player.PlayerCredentialsMapper;
-import org.rides.service.player.interfaces.PlayerCredentialsService;
+import org.rides.service.player.interfaces.PlayerCredentialsProcessService;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -15,7 +15,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class PlayerAuthorizationHandlerImpl implements PlayerAuthorizationHandler {
     private final PlayerCredentialsMapper credentialsMapper;
-    private final PlayerCredentialsService credentialsService;
+    private final PlayerCredentialsProcessService credentialsService;
     @Override
     public UUID authorize(PlayerCredentialsDto dto) {
         PlayerEntity entity = credentialsMapper.toEntity(dto);

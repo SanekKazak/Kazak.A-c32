@@ -107,4 +107,7 @@ public class PlayerPersistenceServiceImpl implements PlayerPersistenceService {
         transaction.commit();
         session.close();
     }
+
+
+
 }

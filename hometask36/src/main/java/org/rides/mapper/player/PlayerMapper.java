@@ -21,6 +21,7 @@ public interface PlayerMapper {
     @Mapping(target = "balance", source = "balance")
     @Mapping(target = "bet", source = "betsId")
     @Mapping(target = "token", source = "token")
+    @Mapping(target = "role", source = "role")
     @Mapping(target = "created", ignore = true)
     @Mapping(target = "updated", ignore = true)
     @Mapping(target = "password", ignore = true)

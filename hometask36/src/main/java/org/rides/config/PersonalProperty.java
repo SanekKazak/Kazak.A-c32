@@ -11,7 +11,7 @@ public class PersonalProperty {
         properties.put("hibernate.connection.password", "1");
         properties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
 
-        properties.put("hibernate.hbm2ddl.auto", "create-drop");
+        properties.put("hibernate.hbm2ddl.auto", "none");
         properties.put("hibernate.show_sql", "true");
         properties.put("hibernate.format_sql", "true");
 
