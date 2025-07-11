@@ -30,13 +30,12 @@ public class PlayerEntity {
             fetch = FetchType.LAZY
     )
     private List<BetEntity> bet = new ArrayList<>();
-    @Column(name="login", unique = true, nullable = false)
+    @Column(name="login", unique = true)
     private String login;
     @Column(name="password")
     private String password;
     @Column(name="balance")
-    @ColumnDefault("0")
-    private Integer balance;
+    private Integer balance = 0;
     @Enumerated(value = EnumType.STRING)
     @ColumnDefault("'USER'")
     @Column(name = "role", nullable = false)
@@ -45,6 +44,7 @@ public class PlayerEntity {
     private Instant created;
     @UpdateTimestamp
     private Instant updated;
+
 
     public PlayerEntity(String login, String password) {
         this.login = login;

@@ -1,6 +1,6 @@
 package org.rides.service.player.impl;
 
-import org.rides.config.BackendErrorExceptionProxy;
+import org.rides.utils.BackendErrorExceptionProxy;
 import org.rides.entity.PlayerEntity;
 import org.rides.service.player.interfaces.PlayerBalanceValidationService;
 import org.springframework.stereotype.Service;

@@ -3,20 +3,24 @@ package org.rides.service.player.impl;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.rides.config.PersistenceService;
+import org.rides.utils.PersistenceService;
 import org.rides.entity.PlayerEntity;
 import org.rides.service.player.interfaces.PlayerPersistenceService;
+import org.rides.utils.PersistenceUpdateService;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.UUID;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.*;
 
 @Service
 public class PlayerPersistenceServiceImpl implements PlayerPersistenceService {
     private final SessionFactory factory;
+    private final PersistenceUpdateService updateService;
 
-    public PlayerPersistenceServiceImpl(PersistenceService service) {
+    public PlayerPersistenceServiceImpl(PersistenceService service, PersistenceUpdateService updateService) {
         factory = service.getFactory();
+        this.updateService = updateService;
     }
 
     @Override
@@ -108,6 +112,8 @@ public class PlayerPersistenceServiceImpl implements PlayerPersistenceService {
         session.close();
     }
 
-
-
+    @Override
+    public void update(PlayerEntity entity, String field, String value) {
+        updateService.update(entity, field, value);
+    }
 }

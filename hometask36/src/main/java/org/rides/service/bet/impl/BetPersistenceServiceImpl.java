@@ -1,7 +1,7 @@
 package org.rides.service.bet.impl;
 
 import org.hibernate.SessionFactory;
-import org.rides.config.PersistenceService;
+import org.rides.utils.PersistenceService;
 import org.rides.entity.BetEntity;
 import org.rides.service.bet.interfaces.BetPersistenceService;
 import org.springframework.stereotype.Service;

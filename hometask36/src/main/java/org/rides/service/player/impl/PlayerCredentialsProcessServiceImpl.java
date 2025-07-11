@@ -26,7 +26,7 @@ public class PlayerCredentialsProcessServiceImpl implements PlayerCredentialsPro
 
         UUID token = UUID.randomUUID();
         entity.setToken(token);
-        persistenceService.update(entity, "token", token.toString());
+//        persistenceService.update(entity, "token", token.toString());
         return token;
     }
 

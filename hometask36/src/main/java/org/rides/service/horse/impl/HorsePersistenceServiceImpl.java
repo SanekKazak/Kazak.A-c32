@@ -1,7 +1,7 @@
 package org.rides.service.horse.impl;
 
 import org.hibernate.SessionFactory;
-import org.rides.config.PersistenceService;
+import org.rides.utils.PersistenceService;
 import org.rides.entity.HorseEntity;
 import org.rides.service.horse.interfaces.HorsePersistenceService;
 import org.springframework.stereotype.Service;

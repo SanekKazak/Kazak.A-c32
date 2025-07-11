@@ -1,7 +1,7 @@
 package org.rides.service.player.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.rides.config.BackendErrorExceptionProxy;
+import org.rides.utils.BackendErrorExceptionProxy;
 import org.rides.entity.PlayerEntity;
 import org.rides.service.player.interfaces.PlayerBalanceChangeService;
 import org.rides.service.player.interfaces.PlayerBalanceValidationService;

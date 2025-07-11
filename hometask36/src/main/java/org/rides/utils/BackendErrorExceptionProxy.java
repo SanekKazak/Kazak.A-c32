@@ -1,4 +1,4 @@
-package org.rides.config;
+package org.rides.utils;
 
 import java.util.HashMap;
 import java.util.Map;

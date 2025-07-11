@@ -1,7 +1,7 @@
 package org.rides.service.match.impl;
 
 import org.hibernate.SessionFactory;
-import org.rides.config.PersistenceService;
+import org.rides.utils.PersistenceService;
 import org.rides.entity.MatchEntity;
 import org.rides.service.match.interfaces.MatchPersistenceService;
 import org.springframework.stereotype.Service;

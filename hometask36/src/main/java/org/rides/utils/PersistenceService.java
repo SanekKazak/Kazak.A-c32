@@ -1,8 +1,9 @@
-package org.rides.config;
+package org.rides.utils;
 
 import lombok.Getter;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.rides.config.PersonalProperty;
 import org.rides.entity.BetEntity;
 import org.rides.entity.HorseEntity;
 import org.rides.entity.MatchEntity;
