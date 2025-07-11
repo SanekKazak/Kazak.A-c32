@@ -1,5 +1,7 @@
 package org.rides.utils;
 
+import jakarta.annotation.PostConstruct;
+import lombok.Getter;
 import lombok.SneakyThrows;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -7,13 +9,10 @@ import org.hibernate.Transaction;
 import org.reflections.Reflections;
 import org.springframework.stereotype.Service;
 
-
-
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.time.Instant;
-import java.time.LocalDate;
+
 import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +20,7 @@ import java.util.Set;
 import java.util.UUID;
 import org.reflections.scanners.Scanners;
 
-
+@Getter
 @Service
 public class PersistenceUpdateService {
     private final SessionFactory factory;
@@ -39,17 +38,12 @@ public class PersistenceUpdateService {
         annotated.forEach(this::initClassContext);
     }
 
-    public void initClassContext(Class<?> clazz) {
-        methodsCashInititializer(clazz);
-        getterIdCashInititializer(clazz);
-    }
-
     public void update(Object entity, String field, Object value) {
         Class<?> keyClass = entity.getClass();
 
         if (!methodsCash.containsKey(keyClass)) {
             initClassContext(keyClass);
-            getterIdCashInititializer(keyClass);
+            getterIdCashInitializer(keyClass);
         }
 
         Map<Field, Method> reduced = methodsCash.get(keyClass);
@@ -80,8 +74,13 @@ public class PersistenceUpdateService {
         }
     }
 
+    private void initClassContext(Class<?> clazz) {
+        methodsCashInitializer(clazz);
+        getterIdCashInitializer(clazz);
+    }
+
     @SneakyThrows
-    private void methodsCashInititializer(Class<?> clazz){
+    private void methodsCashInitializer(Class<?> clazz){
         Map<Field, Method> secondary = new HashMap<>();
         Field[] declaredFields = clazz.getDeclaredFields();
         for (Field field : declaredFields) {
@@ -92,8 +91,8 @@ public class PersistenceUpdateService {
     }
 
     @SneakyThrows
-    private void getterIdCashInititializer(Class<?> clazz){
-        Method getId = idInitMethodsCash.put(clazz, clazz.getDeclaredMethod("getId"));
+    private void getterIdCashInitializer(Class<?> clazz){
+        Method getId = clazz.getDeclaredMethod("getId");
         idInitMethodsCash.put(clazz, getId);
     }
 }

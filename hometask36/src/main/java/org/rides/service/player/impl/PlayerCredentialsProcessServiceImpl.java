@@ -5,6 +5,7 @@ import org.rides.entity.PlayerEntity;
 import org.rides.service.player.interfaces.PlayerCredentialsProcessService;
 import org.rides.service.player.interfaces.PlayerCredentialsValidatorService;
 import org.rides.service.player.interfaces.PlayerPersistenceService;
+import org.rides.utils.BackendErrorExceptionProxy;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -17,22 +18,26 @@ public class PlayerCredentialsProcessServiceImpl implements PlayerCredentialsPro
 
     @Override
     public UUID authorize(PlayerEntity entity) {
-        var errors = validatorService.validate(entity);
+        BackendErrorExceptionProxy errors = validatorService.validate(entity);
 
         if(errors.isExist()){
             System.out.println(errors);
             return null;
         }
 
+        PlayerEntity dbEntity = persistenceService.read(entity.getLogin());
+        if(!dbEntity.getPassword().equals(entity.getPassword())){
+            errors.addError("password", "password is not valid");
+        }
+
         UUID token = UUID.randomUUID();
-        entity.setToken(token);
-//        persistenceService.update(entity, "token", token.toString());
+        persistenceService.update(dbEntity, "token", token);
         return token;
     }
 
     @Override
     public Boolean register(PlayerEntity entity) {
-        var errors = validatorService.validate(entity);
+        var errors = validatorService.validateRegistration(entity);
 
         if(errors.isExist()){
             System.out.println(errors);

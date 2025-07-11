@@ -7,7 +7,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import java.util.UUID;
 
 public class Test {
-
     public static void main(String[] args) {
         var context = new AnnotationConfigApplicationContext(ContextConfig.class);
         PlayerPersistenceService bean1 = context.getBean(PlayerPersistenceService.class);
@@ -26,13 +25,14 @@ public class Test {
 //        var etnity = new PlayerEntity("gjsdf2", "123hi");
 //        bean1.create(etnity);
         PersistenceUpdateService bean = context.getBean(PersistenceUpdateService.class);
-        var e = new PlayerEntity();
-        e.setId(UUID.fromString("804ca61b-0220-4a7a-b854-96f5dbdb58c1"));
-        bean.update(e, "token", null);
+//        var e = new PlayerEntity();
+//        e.setId(UUID.fromString("804ca61b-0220-4a7a-b854-96f5dbdb58c1"));
+//        bean.update(e, "token", null);
 //        e.setId(UUID.fromString(""));
 //        e.setLogin("gjsdf2");
 //        bean.initClassContext(PlayerEntity.class);
 //        bean.update(e, "login", "fjiwwfi");
+        System.out.println();
     }
 
 }

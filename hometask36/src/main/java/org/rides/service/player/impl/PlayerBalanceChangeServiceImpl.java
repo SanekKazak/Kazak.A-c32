@@ -25,8 +25,7 @@ public class PlayerBalanceChangeServiceImpl implements PlayerBalanceChangeServic
         Integer currentBalance = entity.getBalance();
         Integer resultBalance = currentBalance + newBalance;
 
-        entity.setBalance(resultBalance);
-        persistenceService.update(entity);
+        persistenceService.update(entity, "balance", resultBalance);
 
         return true;
     }

@@ -113,7 +113,7 @@ public class PlayerPersistenceServiceImpl implements PlayerPersistenceService {
     }
 
     @Override
-    public void update(PlayerEntity entity, String field, String value) {
+    public void update(PlayerEntity entity, String field, Object value) {
         updateService.update(entity, field, value);
     }
 }

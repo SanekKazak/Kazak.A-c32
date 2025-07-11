@@ -19,7 +19,7 @@ public class PlayerCredentialsValidatorServiceImpl implements PlayerCredentialsV
         if(password ==null || password.isBlank()){
             errors.addError("password", "null password");
         }
-        if(password ==null || password.isBlank()){
+        if(login ==null || login.isBlank()){
             errors.addError("login", "null login");
         }
         return errors;
@@ -28,12 +28,6 @@ public class PlayerCredentialsValidatorServiceImpl implements PlayerCredentialsV
     @Override
     public BackendErrorExceptionProxy validateAuthorization(PlayerEntity entity) {
         var errors = validate(entity);
-
-        try {
-            persistenceService.read(entity.getLogin());
-        }catch (Exception e){
-            errors.addError("login", e.getMessage());
-        }
 
         return errors;
     }

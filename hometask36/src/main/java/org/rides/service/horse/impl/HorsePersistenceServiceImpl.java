@@ -4,6 +4,7 @@ import org.hibernate.SessionFactory;
 import org.rides.utils.PersistenceService;
 import org.rides.entity.HorseEntity;
 import org.rides.service.horse.interfaces.HorsePersistenceService;
+import org.rides.utils.PersistenceUpdateService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,9 +13,11 @@ import java.util.UUID;
 @Service
 public class HorsePersistenceServiceImpl implements HorsePersistenceService {
     private final SessionFactory factory;
+    private final PersistenceUpdateService updateService;
 
-    public HorsePersistenceServiceImpl(PersistenceService service) {
+    public HorsePersistenceServiceImpl(PersistenceService service, PersistenceUpdateService updateService) {
         factory = service.getFactory();
+        this.updateService = updateService;
     }
 
     @Override
@@ -109,5 +112,10 @@ public class HorsePersistenceServiceImpl implements HorsePersistenceService {
 
         transaction.commit();
         session.close();
+    }
+
+    @Override
+    public void update(HorseEntity entity, String field, Object value) {
+        updateService.update(entity, field, value);
     }
 }

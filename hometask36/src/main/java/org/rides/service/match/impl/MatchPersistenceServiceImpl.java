@@ -4,6 +4,7 @@ import org.hibernate.SessionFactory;
 import org.rides.utils.PersistenceService;
 import org.rides.entity.MatchEntity;
 import org.rides.service.match.interfaces.MatchPersistenceService;
+import org.rides.utils.PersistenceUpdateService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,10 +13,13 @@ import java.util.UUID;
 @Service
 public class MatchPersistenceServiceImpl implements MatchPersistenceService {
     private final SessionFactory factory;
+    private final PersistenceUpdateService updateService;
 
-    public MatchPersistenceServiceImpl(PersistenceService service) {
+    public MatchPersistenceServiceImpl(PersistenceService service, PersistenceUpdateService updateService) {
         factory = service.getFactory();
+        this.updateService = updateService;
     }
+
     @Override
     public void create(MatchEntity entity) {
         var session = factory.openSession();
@@ -84,5 +88,10 @@ public class MatchPersistenceServiceImpl implements MatchPersistenceService {
 
         transaction.commit();
         session.close();
+    }
+
+    @Override
+    public void update(MatchEntity entity, String field, Object value) {
+        updateService.update(entity, field, value);
     }
 }

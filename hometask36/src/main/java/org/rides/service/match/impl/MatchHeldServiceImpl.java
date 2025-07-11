@@ -40,10 +40,9 @@ public class MatchHeldServiceImpl implements MatchHeldService {
 
         betDefiniteType.forEach(resultPayService::resolveResult);
 
-        match.setBet(betDefiniteType);
+        persistenceService.update(match, "bet", betDefiniteType);
 
-        persistenceService.update(match);
-        return false;
+        return true;
     }
 
 }

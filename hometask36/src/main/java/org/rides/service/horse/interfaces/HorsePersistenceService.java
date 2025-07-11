@@ -1,6 +1,7 @@
 package org.rides.service.horse.interfaces;
 
 import org.rides.entity.HorseEntity;
+import org.rides.entity.PlayerEntity;
 
 import java.util.List;
 import java.util.UUID;
@@ -13,4 +14,5 @@ public interface HorsePersistenceService {
     void update(HorseEntity entity);
     void update(List<HorseEntity> horses);
     void delete(UUID id);
+    void update(HorseEntity entity, String field, Object value);
 }
