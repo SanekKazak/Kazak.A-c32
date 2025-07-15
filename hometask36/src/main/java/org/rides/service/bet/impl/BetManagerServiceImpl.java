@@ -6,7 +6,9 @@ import org.rides.service.bet.interfaces.BetManagerService;
 import org.rides.service.bet.interfaces.BetPersistenceService;
 import org.rides.service.bet.interfaces.BetValidationService;
 import org.rides.utils.BackendErrorExceptionProxy;
+import org.springframework.stereotype.Service;
 
+@Service
 @RequiredArgsConstructor
 public class BetManagerServiceImpl implements BetManagerService {
     private final BetPersistenceService persistenceService;

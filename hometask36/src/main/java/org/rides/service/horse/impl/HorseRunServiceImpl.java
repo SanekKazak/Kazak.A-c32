@@ -9,7 +9,6 @@ import java.util.Random;
 
 @Service
 public class HorseRunServiceImpl implements HorseRunService {
-
     @Override
     public List<HorseEntity> measureHorsesSpeed(List<HorseEntity> horses) {
         Random random = new Random();

@@ -10,7 +10,6 @@ import java.util.Optional;
 
 @Service
 public class MatchCalculateWinnerServiceImpl implements MatchCalculateWinnerService {
-
     @Override
     public MatchEntity calculateWinner(MatchEntity entity) {
         List<HorseEntity> horses = entity.getHorse();
