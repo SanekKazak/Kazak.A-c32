@@ -2,11 +2,12 @@ package org.rides.handler.player.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.rides.dto.PlayerCredentialsDto;
-import org.rides.dto.PlayerDto;
 import org.rides.entity.PlayerEntity;
 import org.rides.handler.player.interfaces.PlayerAuthorizationHandler;
 import org.rides.mapper.player.PlayerCredentialsMapper;
-import org.rides.service.player.interfaces.PlayerCredentialsProcessService;
+import org.rides.service.player.interfaces.PlayerAuthService;
+import org.rides.service.player.interfaces.PlayerCredentialsService;
+import org.rides.service.player.interfaces.PlayerDeAuthorizeService;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -15,7 +16,9 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class PlayerAuthorizationHandlerImpl implements PlayerAuthorizationHandler {
     private final PlayerCredentialsMapper credentialsMapper;
-    private final PlayerCredentialsProcessService credentialsService;
+    private final PlayerCredentialsService credentialsService;
+    private final PlayerAuthService authService;
+    private final PlayerDeAuthorizeService deAuthorizeService;
     @Override
     public UUID authorize(PlayerCredentialsDto dto) {
         PlayerEntity entity = credentialsMapper.toEntity(dto);
@@ -23,7 +26,8 @@ public class PlayerAuthorizationHandlerImpl implements PlayerAuthorizationHandle
     }
 
     @Override
-    public Boolean deAuthorize(PlayerDto dto) {
-        return null;
+    public Boolean deAuthorize(UUID token) {
+        PlayerEntity entity = authService.findByToken(token);
+        return deAuthorizeService.deAuthorize(entity);
     }
 }

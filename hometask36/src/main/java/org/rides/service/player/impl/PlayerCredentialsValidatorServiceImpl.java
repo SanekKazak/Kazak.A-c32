@@ -27,9 +27,7 @@ public class PlayerCredentialsValidatorServiceImpl implements PlayerCredentialsV
 
     @Override
     public BackendErrorExceptionProxy validateAuthorization(PlayerEntity entity) {
-        var errors = validate(entity);
-
-        return errors;
+        return validate(entity);
     }
 
     @Override
@@ -40,7 +38,7 @@ public class PlayerCredentialsValidatorServiceImpl implements PlayerCredentialsV
             errors.addError("password", "password to low");
         }
 
-        PlayerEntity exist = persistenceService.read(entity.getLogin());
+        PlayerEntity exist = persistenceService.readByLogin(entity.getLogin());
 
         if(exist!=null){
             errors.addError("login", "login already exist");

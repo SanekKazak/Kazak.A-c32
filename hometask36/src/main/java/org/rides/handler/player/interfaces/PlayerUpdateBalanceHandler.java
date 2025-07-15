@@ -1,7 +1,7 @@
 package org.rides.handler.player.interfaces;
 
-import org.rides.dto.PlayerDto;
+import org.rides.dto.PlayerBalanceUpdate;
 
 public interface PlayerUpdateBalanceHandler {
-    Boolean updatePlayerBalance(PlayerDto dto, Integer delta);
+    Boolean updatePlayerBalance(PlayerBalanceUpdate update);
 }

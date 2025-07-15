@@ -9,8 +9,6 @@ import org.rides.service.player.interfaces.PlayerPersistenceService;
 import org.rides.utils.PersistenceUpdateService;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.*;
 
 @Service
@@ -35,7 +33,7 @@ public class PlayerPersistenceServiceImpl implements PlayerPersistenceService {
     }
 
     @Override
-    public PlayerEntity read(String login) {
+    public PlayerEntity readByLogin(String login) {
         Session session = factory.openSession();
         Transaction transaction = session.beginTransaction();
 
@@ -54,7 +52,7 @@ public class PlayerPersistenceServiceImpl implements PlayerPersistenceService {
     }
 
     @Override
-    public PlayerEntity read(UUID id) {
+    public PlayerEntity readById(UUID id) {
         var session = factory.openSession();
         var transaction = session.beginTransaction();
 
@@ -65,6 +63,23 @@ public class PlayerPersistenceServiceImpl implements PlayerPersistenceService {
                                 "where p.id =: id",
                         PlayerEntity.class)
                 .setParameter("id", id)
+                .getSingleResult();
+
+        transaction.commit();
+        session.close();
+        return entity;
+    }
+
+    @Override
+    public PlayerEntity readByToken(UUID token) {
+        var session = factory.openSession();
+        var transaction = session.beginTransaction();
+
+        var entity = session.createQuery(
+                        "from PlayerEntity " +
+                                "where token = :token ",
+                        PlayerEntity.class)
+                .setParameter("token", token)
                 .getSingleResult();
 
         transaction.commit();
@@ -105,7 +120,7 @@ public class PlayerPersistenceServiceImpl implements PlayerPersistenceService {
         Session session = factory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        PlayerEntity entity = read(id);
+        PlayerEntity entity = readById(id);
         session.remove(entity);
 
         transaction.commit();

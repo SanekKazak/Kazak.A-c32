@@ -1,20 +1,21 @@
 package org.rides.handler.player.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.rides.dto.PlayerDto;
+import org.rides.dto.PlayerBalanceUpdate;
+import org.rides.entity.PlayerEntity;
 import org.rides.handler.player.interfaces.PlayerUpdateBalanceHandler;
-import org.rides.mapper.player.PlayerMapper;
-import org.rides.service.player.interfaces.PlayerBalanceChangeService;
+import org.rides.service.player.interfaces.PlayerAuthService;
+import org.rides.service.player.interfaces.PlayerBalanceService;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class PlayerUpdateBalanceHandlerImpl implements PlayerUpdateBalanceHandler {
-    private final PlayerBalanceChangeService changerService;
-    private final PlayerMapper mapper;
+    private final PlayerBalanceService changerService;
+    private final PlayerAuthService authService;
     @Override
-    public Boolean updatePlayerBalance(PlayerDto dto, Integer delta) {
-        var entity = mapper.toEntity(dto);
-        return changerService.changeBalanceValue(entity, delta);
+    public Boolean updatePlayerBalance(PlayerBalanceUpdate update) {
+        PlayerEntity entity = authService.findByToken(update.getToken());
+        return changerService.changeBalanceValue(entity, update.getDelta());
     }
 }

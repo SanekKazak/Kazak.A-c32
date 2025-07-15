@@ -33,7 +33,7 @@ public class MatchEntity {
     @OneToMany(
             mappedBy = "match",
             fetch = FetchType.LAZY,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE}
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}
     )
     private List<BetEntity> bet = new ArrayList<>();
     @ManyToMany(

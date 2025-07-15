@@ -2,6 +2,6 @@ package org.rides.service.player.interfaces;
 
 import org.rides.entity.PlayerEntity;
 
-public interface PlayerBalanceChangeService {
+public interface PlayerBalanceService {
     Boolean changeBalanceValue(PlayerEntity entity, Integer newBalance);
 }

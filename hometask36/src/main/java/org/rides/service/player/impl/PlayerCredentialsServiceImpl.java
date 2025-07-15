@@ -2,7 +2,7 @@ package org.rides.service.player.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.rides.entity.PlayerEntity;
-import org.rides.service.player.interfaces.PlayerCredentialsProcessService;
+import org.rides.service.player.interfaces.PlayerCredentialsService;
 import org.rides.service.player.interfaces.PlayerCredentialsValidatorService;
 import org.rides.service.player.interfaces.PlayerPersistenceService;
 import org.rides.utils.BackendErrorExceptionProxy;
@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class PlayerCredentialsProcessServiceImpl implements PlayerCredentialsProcessService {
+public class PlayerCredentialsServiceImpl implements PlayerCredentialsService {
     private final PlayerPersistenceService persistenceService;
     private final PlayerCredentialsValidatorService validatorService;
 
@@ -25,7 +25,7 @@ public class PlayerCredentialsProcessServiceImpl implements PlayerCredentialsPro
             return null;
         }
 
-        PlayerEntity dbEntity = persistenceService.read(entity.getLogin());
+        PlayerEntity dbEntity = persistenceService.readByLogin(entity.getLogin());
         if(!dbEntity.getPassword().equals(entity.getPassword())){
             errors.addError("password", "password is not valid");
         }
