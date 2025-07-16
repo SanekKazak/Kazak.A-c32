@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.rides.entity.BetEntity;
 import org.rides.entity.HorseEntity;
 import org.rides.entity.MatchEntity;
-import org.rides.service.bet.interfaces.BetResultPayService;
+import org.rides.service.bet.interfaces.BetCashFlowService;
 import org.rides.service.horse.interfaces.HorseRunService;
 import org.rides.service.match.interfaces.MatchCalculateWinnerService;
 import org.rides.service.match.interfaces.MatchHeldService;
@@ -19,7 +19,7 @@ public class MatchHeldServiceImpl implements MatchHeldService {
     private final MatchPersistenceService persistenceService;
     private final HorseRunService horseRunService;
     private final MatchCalculateWinnerService winnerService;
-    private final BetResultPayService resultPayService;
+    private final BetCashFlowService resultPayService;
 
     @Override
     public Boolean heldMatch(MatchEntity match) {
@@ -38,7 +38,7 @@ public class MatchHeldServiceImpl implements MatchHeldService {
                 })
                 .toList();
 
-        betDefiniteType.forEach(resultPayService::resolveResult);
+        betDefiniteType.forEach(resultPayService::resolveInflow);
 
         persistenceService.update(match, "bet", betDefiniteType);
 

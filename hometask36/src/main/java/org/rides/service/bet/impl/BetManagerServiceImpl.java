@@ -2,24 +2,26 @@ package org.rides.service.bet.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.rides.entity.BetEntity;
+import org.rides.service.bet.interfaces.BetCashFlowService;
 import org.rides.service.bet.interfaces.BetManagerService;
 import org.rides.service.bet.interfaces.BetPersistenceService;
-import org.rides.service.bet.interfaces.BetValidationService;
-import org.rides.utils.BackendErrorExceptionProxy;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class BetManagerServiceImpl implements BetManagerService {
     private final BetPersistenceService persistenceService;
-    private final BetValidationService validationService;
+    private final BetCashFlowService cashFlowService;
     @Override
     public Boolean create(BetEntity entity) {
-        BackendErrorExceptionProxy validate = validationService.validate(entity);
-        if(validate.isExist()){
+        Optional<BetEntity> betEntity = cashFlowService.resolveOutflow(entity);
+        if(betEntity.isEmpty()){
             return false;
         }
-        persistenceService.create(entity);
+        BetEntity result = betEntity.get();
+        persistenceService.create(result);
         return true;
     }
 }

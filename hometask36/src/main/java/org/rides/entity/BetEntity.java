@@ -22,7 +22,8 @@ public class BetEntity {
     @UuidGenerator
     private UUID id;
     @ManyToOne(
-            fetch = FetchType.LAZY
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.MERGE
     )
     @JoinColumn(name = "player_id")
     private PlayerEntity player;
