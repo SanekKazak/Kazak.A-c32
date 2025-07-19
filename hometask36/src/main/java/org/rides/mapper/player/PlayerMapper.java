@@ -4,7 +4,7 @@ import org.mapstruct.AnnotateWith;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
-import org.rides.dto.PlayerDto;
+import org.rides.dto.player.PlayerDto;
 import org.rides.entity.BetEntity;
 import org.rides.entity.PlayerEntity;
 import org.springframework.stereotype.Service;

@@ -4,7 +4,7 @@ import org.mapstruct.AnnotateWith;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
-import org.rides.dto.bet.BetDto;
+import org.rides.dto.bet.BetRegistrationDto;
 import org.rides.entity.BetEntity;
 import org.rides.entity.HorseEntity;
 import org.rides.entity.MatchEntity;
@@ -16,32 +16,20 @@ import java.util.UUID;
 @Mapper(unmappedTargetPolicy = ReportingPolicy.ERROR,
         componentModel = "spring")
 @AnnotateWith(value = Service.class)
-public interface BetMapper {
-    @Mapping(target = "id", source = "id")
-    @Mapping(target = "playerId", source = "player")
-    @Mapping(target = "horseId", source = "horse")
-    @Mapping(target = "bet", source = "bet")
-    @Mapping(target = "matchId", source = "match")
-    @Mapping(target = "result", source = "result")
-    @Mapping(target = "created", source = "created")
-    BetDto toDto(BetEntity entity);
-
-    @Mapping(target = "id", source = "id")
-    @Mapping(target = "player", source = "playerId")
+public interface BetRegistrationMapper {
+    @Mapping(target = "player", source = "token")
     @Mapping(target = "horse", source = "horseId")
     @Mapping(target = "bet", source = "bet")
     @Mapping(target = "match", source = "matchId")
-    @Mapping(target = "result", source = "result")
-    @Mapping(target = "created", source = "created")
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "result", ignore = true)
+    @Mapping(target = "created", ignore = true)
     @Mapping(target = "updated", ignore = true)
-    BetEntity toEntity(BetDto dto);
+    BetEntity toEntity(BetRegistrationDto dto);
 
-    default UUID fromPlayerToId(PlayerEntity entity){
-        return entity.getId();
-    }
-    default PlayerEntity fromIdToPlayer(UUID id){
+    default PlayerEntity fromIdToPlayer(UUID token){
         var entity = new PlayerEntity();
-        entity.setId(id);
+        entity.setToken(token);
         return entity;
     }
     default UUID fromMatchToId(MatchEntity entity){

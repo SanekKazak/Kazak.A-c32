@@ -10,9 +10,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Table(name = "Match")
 @Entity
@@ -23,8 +21,6 @@ public class MatchEntity {
     @Id
     @UuidGenerator
     private UUID id;
-    @Column(name = "is_played")
-    private Boolean isPlayed;
     @ManyToOne(
             fetch = FetchType.LAZY
     )
@@ -38,22 +34,33 @@ public class MatchEntity {
     private List<BetEntity> bet = new ArrayList<>();
     @ManyToMany(
             mappedBy = "match",
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-            fetch = FetchType.LAZY
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE}
     )
-    private List<HorseEntity> horse = new ArrayList<>();
+    private Set<HorseEntity> horse = new HashSet<>();
     @CreationTimestamp
     private Instant created;
     @UpdateTimestamp
     private Instant updated;
 
-    public void setBet(List<BetEntity> entity){
-        bet.addAll(entity);
-        entity.forEach(bet->bet.setMatch(this));
+    public void setBet(BetEntity entity){
+        bet.add(entity);
+        entity.setMatch(this);
     }
 
-    public void removeBet(BetEntity entity){
-        bet.remove(entity);
-        entity.setMatch(null);
+    public void setBet(List<BetEntity> entity){
+        bet.addAll(entity);
+    }
+
+    public void setHorse(Set<HorseEntity> horse) {
+        this.horse = horse;
+    }
+
+    public void setHorse(List<HorseEntity> horse) {
+        this.horse = new HashSet<>(horse);
+    }
+
+    public List<HorseEntity> getHorse() {
+        return horse.stream().toList();
     }
 }

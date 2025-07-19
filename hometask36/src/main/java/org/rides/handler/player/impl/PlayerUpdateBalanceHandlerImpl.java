@@ -1,7 +1,7 @@
 package org.rides.handler.player.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.rides.dto.PlayerBalanceUpdate;
+import org.rides.dto.player.PlayerBalanceUpdate;
 import org.rides.entity.PlayerEntity;
 import org.rides.handler.player.interfaces.PlayerUpdateBalanceHandler;
 import org.rides.service.player.interfaces.PlayerAuthService;

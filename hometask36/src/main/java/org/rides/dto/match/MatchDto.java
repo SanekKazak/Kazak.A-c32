@@ -1,4 +1,4 @@
-package org.rides.dto;
+package org.rides.dto.match;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +11,6 @@ import java.util.UUID;
 public class MatchDto {
     private UUID id;
     private UUID winnerId;
-    private Boolean isPlayed;
     private List<UUID> betsId;
     private List<UUID> horsesId;
     private Instant created;

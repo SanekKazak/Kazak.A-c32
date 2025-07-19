@@ -1,4 +1,4 @@
-package org.rides.dto;
+package org.rides.dto.player;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

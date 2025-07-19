@@ -1,9 +1,9 @@
 package org.rides.service.horse.impl;
 
 import org.hibernate.SessionFactory;
-import org.rides.utils.PersistenceService;
 import org.rides.entity.HorseEntity;
 import org.rides.service.horse.interfaces.HorsePersistenceService;
+import org.rides.utils.PersistenceService;
 import org.rides.utils.PersistenceUpdateService;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +18,11 @@ public class HorsePersistenceServiceImpl implements HorsePersistenceService {
     public HorsePersistenceServiceImpl(PersistenceService service, PersistenceUpdateService updateService) {
         factory = service.getFactory();
         this.updateService = updateService;
+    }
+
+    @Override
+    public void multiSave(HorseEntity entity, List<String> fields) {
+        updateService.multiUpdate(entity, fields);
     }
 
     @Override
@@ -71,13 +76,32 @@ public class HorsePersistenceServiceImpl implements HorsePersistenceService {
         var transaction = session.beginTransaction();
 
         List<HorseEntity> resultList = session.createQuery(
-                        "from HorseEntity",
+                "from HorseEntity",
                 HorseEntity.class
         ).getResultList();
 
         transaction.commit();
         session.close();
         return resultList;
+    }
+
+    @Override
+    public List<HorseEntity> readAllByIds(List<UUID> ids) {
+        var session = factory.openSession();
+        var transaction = session.beginTransaction();
+
+        List<HorseEntity> horsesById = session.createQuery(
+                        "select h " +
+                                "from HorseEntity h " +
+                                "left join fetch h.match " +
+                                "where h.id IN :ids",
+                        HorseEntity.class)
+                .setParameter("ids", ids)
+                .getResultList();
+
+        transaction.commit();
+        session.close();
+        return horsesById;
     }
 
     @Override

@@ -1,7 +1,7 @@
 package org.rides.handler.match.interfaces;
 
-import org.rides.dto.MatchDto;
+import org.rides.dto.match.MatchRegistrationDto;
 
 public interface MatchRegisterHandler {
-    Boolean register(MatchDto dto);
+    Boolean register(MatchRegistrationDto dto);
 }

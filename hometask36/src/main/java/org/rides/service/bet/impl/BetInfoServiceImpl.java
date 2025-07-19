@@ -1,7 +1,7 @@
 package org.rides.service.bet.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.rides.dto.PaginationDto;
+import org.rides.dto.util.PaginationDto;
 import org.rides.entity.BetEntity;
 import org.rides.service.bet.interfaces.BetInfoService;
 import org.rides.service.bet.interfaces.BetPersistenceService;

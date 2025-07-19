@@ -11,7 +11,7 @@ public class BetValidationServiceImpl implements BetValidationService {
     public BackendErrorExceptionProxy validate(BetEntity entity) {
         Integer balance = entity.getPlayer().getBalance();
         var errors = new BackendErrorExceptionProxy();
-        if((balance-entity.getBet())>0){
+        if((balance-entity.getBet())<0){
             errors.addError("balance", "you don't have such money");
         }
         return errors;

@@ -1,7 +1,7 @@
 package org.rides.handler.bet.interfaces;
 
-import org.rides.dto.BetDto;
+import org.rides.dto.bet.BetRegistrationDto;
 
 public interface BetRegisterHandler {
-    Boolean register(BetDto dto);
+    Boolean register(BetRegistrationDto dto);
 }

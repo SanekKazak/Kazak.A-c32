@@ -13,12 +13,7 @@ public class PlayerBalanceServiceImpl implements PlayerBalanceService {
 
     @Override
     public Boolean changeBalanceValue(PlayerEntity entity, Integer newBalance) {
-
-        Integer currentBalance = entity.getBalance();
-        Integer resultBalance = currentBalance + newBalance;
-
-        persistenceService.update(entity, "balance", resultBalance);
-
+        persistenceService.update(entity, "balance", entity.getBalance() + newBalance);
         return true;
     }
 }

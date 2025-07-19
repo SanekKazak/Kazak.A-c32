@@ -41,7 +41,8 @@ public class HorseEntity {
     )
     private List<BetEntity> bet = new ArrayList<>();
     @ManyToMany(
-            cascade = {CascadeType.MERGE, CascadeType.PERSIST}
+            cascade = {CascadeType.MERGE, CascadeType.PERSIST},
+            fetch = FetchType.LAZY
     )
     private List<MatchEntity> match = new ArrayList<>();
     @CreationTimestamp
@@ -60,33 +61,29 @@ public class HorseEntity {
         this.name = name;
     }
 
-    public void setAward(List<MatchEntity> entity){
-        award.addAll(entity);
-        entity.forEach(bet->bet.setWinner(this));
+    public void setAward(MatchEntity entity){
+        award.add(entity);
+        entity.setWinner(this);
     }
 
-    public void removeAward(MatchEntity entity){
-        award.remove(entity);
-        entity.setWinner(null);
+    public void setAward(List<MatchEntity> entity){
+        award.addAll(entity);
+    }
+
+    public void setBet(BetEntity entity){
+        bet.add(entity);
+        entity.setHorse(this);
     }
 
     public void setBet(List<BetEntity> entity){
         bet.addAll(entity);
-        entity.forEach(bet -> bet.setHorse(this));
     }
 
-    public void removeBet(BetEntity entity){
-        bet.remove(entity);
-        entity.setHorse(null);
+    public void setMatch(MatchEntity entity){
+        match.add(entity);
     }
 
     public void setMatch(List<MatchEntity> entity){
         match.addAll(entity);
-        entity.forEach(horse->horse.getHorse().add(this));
-    }
-
-    public void removeMatch(MatchEntity entity){
-        match.remove(entity);
-        entity.getHorse().remove(this);
     }
 }

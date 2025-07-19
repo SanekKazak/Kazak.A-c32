@@ -1,6 +1,6 @@
 package org.rides.handler.player.interfaces;
 
-import org.rides.dto.PlayerCredentialsDto;
+import org.rides.dto.player.PlayerCredentialsDto;
 
 import java.util.UUID;
 

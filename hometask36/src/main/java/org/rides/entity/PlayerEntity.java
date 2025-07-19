@@ -45,20 +45,18 @@ public class PlayerEntity {
     @UpdateTimestamp
     private Instant updated;
 
-
     public PlayerEntity(String login, String password) {
         this.login = login;
         this.password = password;
     }
 
-    public void setBet(List<BetEntity> entity){
-        bet.addAll(entity);
-        entity.forEach(bet->bet.setPlayer(this));
+    public void setBet(BetEntity entity){
+        bet.add(entity);
+        entity.setPlayer(this);
     }
 
-    public void removeBet(BetEntity entity){
-        bet.remove(entity);
-        entity.setPlayer(null);
+    public void setBet(List<BetEntity> entity){
+        bet.addAll(entity);
     }
 
     public enum RoleType{

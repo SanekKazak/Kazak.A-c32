@@ -1,6 +1,6 @@
 package org.rides.service.bet.interfaces;
 
-import org.rides.dto.PaginationDto;
+import org.rides.dto.util.PaginationDto;
 import org.rides.entity.BetEntity;
 
 import java.util.List;

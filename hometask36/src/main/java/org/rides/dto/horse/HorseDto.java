@@ -1,4 +1,4 @@
-package org.rides.dto;
+package org.rides.dto.horse;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

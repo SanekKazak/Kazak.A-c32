@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.rides.entity.BetEntity;
 import org.rides.entity.PlayerEntity;
 import org.rides.service.bet.interfaces.BetCashFlowService;
+import org.rides.service.bet.interfaces.BetPersistenceService;
 import org.rides.service.bet.interfaces.BetValidationService;
 import org.rides.service.player.interfaces.PlayerBalanceService;
 import org.rides.utils.BackendErrorExceptionProxy;
@@ -16,9 +17,12 @@ import java.util.Optional;
 public class BetCashFlowServiceImpl implements BetCashFlowService {
     private final PlayerBalanceService changerService;
     private final BetValidationService validationService;
+    private final BetPersistenceService betPersistenceService;
 
     @Override
-    public BetEntity resolveInflow(BetEntity entity) {
+    public BetEntity resolveInflow(BetEntity bet) {
+        BetEntity entity = betPersistenceService.read(bet.getId());
+        entity.setResult(bet.getResult());
         switch(entity.getResult()){
             case WIN -> changerService.changeBalanceValue(entity.getPlayer(), (2)*entity.getBet());
             case PROCESS -> changerService.changeBalanceValue(entity.getPlayer(), entity.getBet());

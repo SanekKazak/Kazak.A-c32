@@ -1,6 +1,9 @@
 package org.rides.service.bet.impl;
 
 import org.hibernate.SessionFactory;
+import org.rides.entity.HorseEntity;
+import org.rides.entity.MatchEntity;
+import org.rides.entity.PlayerEntity;
 import org.rides.utils.PersistenceService;
 import org.rides.entity.BetEntity;
 import org.rides.service.bet.interfaces.BetPersistenceService;
@@ -25,10 +28,26 @@ public class BetPersistenceServiceImpl implements BetPersistenceService {
         var session = factory.openSession();
         var transaction = session.beginTransaction();
 
+        Integer balance = entity.getPlayer().getBalance();
+
+        MatchEntity match = session.getReference(MatchEntity.class, entity.getMatch().getId());
+        HorseEntity horse = session.getReference(HorseEntity.class, entity.getHorse().getId());
+        PlayerEntity player = session.getReference(PlayerEntity.class, entity.getPlayer().getId());
+
+        player.setBet(entity);
+        player.setBalance(balance);
+        horse.setBet(entity);
+        match.setBet(entity);
+
         session.persist(entity);
 
         transaction.commit();
         session.close();
+    }
+
+    @Override
+    public void multiSave(BetEntity entity, List<String> fields) {
+        updateService.multiUpdate(entity, fields);
     }
 
     @Override
@@ -62,6 +81,7 @@ public class BetPersistenceServiceImpl implements BetPersistenceService {
                         BetEntity.class)
                 .getResultList();
 
+        System.out.println();
         transaction.commit();
         session.close();
         return resultList;

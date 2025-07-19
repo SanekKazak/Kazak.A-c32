@@ -1,7 +1,7 @@
 package org.rides.handler.player.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.rides.dto.PlayerCredentialsDto;
+import org.rides.dto.player.PlayerCredentialsDto;
 import org.rides.entity.PlayerEntity;
 import org.rides.handler.player.interfaces.PlayerRegisterHandler;
 import org.rides.mapper.player.PlayerCredentialsMapper;

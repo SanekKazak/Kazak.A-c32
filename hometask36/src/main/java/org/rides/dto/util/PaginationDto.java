@@ -1,4 +1,4 @@
-package org.rides.dto;
+package org.rides.dto.util;
 
 public class PaginationDto {
     private Integer defaultSize;

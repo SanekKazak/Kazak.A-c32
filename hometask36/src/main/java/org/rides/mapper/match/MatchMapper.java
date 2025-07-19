@@ -4,7 +4,7 @@ import org.mapstruct.AnnotateWith;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
-import org.rides.dto.MatchDto;
+import org.rides.dto.match.MatchDto;
 import org.rides.entity.BetEntity;
 import org.rides.entity.HorseEntity;
 import org.rides.entity.MatchEntity;
@@ -19,7 +19,6 @@ import java.util.UUID;
 public interface MatchMapper {
 
     @Mapping(target = "id", source = "id")
-    @Mapping(target = "isPlayed", source = "isPlayed")
     @Mapping(target = "created", source = "created")
     @Mapping(target = "bet", source = "betsId")
     @Mapping(target = "horse", source = "horsesId")
@@ -28,7 +27,6 @@ public interface MatchMapper {
     MatchEntity toEntity(MatchDto dto);
 
     @Mapping(target = "id", source = "id")
-    @Mapping(target = "isPlayed", source = "isPlayed")
     @Mapping(target = "betsId", source = "bet")
     @Mapping(target = "horsesId", source = "horse")
     @Mapping(target = "winnerId", source = "winner")

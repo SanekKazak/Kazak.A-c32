@@ -5,6 +5,8 @@ import org.rides.entity.BetEntity;
 import org.rides.entity.HorseEntity;
 import org.rides.entity.MatchEntity;
 import org.rides.service.bet.interfaces.BetCashFlowService;
+import org.rides.service.bet.interfaces.BetPersistenceService;
+import org.rides.service.horse.interfaces.HorsePersistenceService;
 import org.rides.service.horse.interfaces.HorseRunService;
 import org.rides.service.match.interfaces.MatchCalculateWinnerService;
 import org.rides.service.match.interfaces.MatchHeldService;
@@ -12,17 +14,21 @@ import org.rides.service.match.interfaces.MatchPersistenceService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class MatchHeldServiceImpl implements MatchHeldService {
-    private final MatchPersistenceService persistenceService;
+    private final MatchPersistenceService matchPersistenceService;
+    private final HorsePersistenceService horsePersistenceService;
+    private final BetPersistenceService betPersistenceService;
     private final HorseRunService horseRunService;
     private final MatchCalculateWinnerService winnerService;
     private final BetCashFlowService resultPayService;
 
     @Override
-    public Boolean heldMatch(MatchEntity match) {
+    public Boolean heldMatch(UUID id) {
+        MatchEntity match = matchPersistenceService.read(id);
         List<HorseEntity> measured = horseRunService.measureHorsesSpeed(match.getHorse());
         match.setHorse(measured);
 
@@ -38,11 +44,14 @@ public class MatchHeldServiceImpl implements MatchHeldService {
                 })
                 .toList();
 
-        betDefiniteType.forEach(resultPayService::resolveInflow);
+        List<BetEntity> readyToSaveBets = betDefiniteType.stream()
+                .map(resultPayService::resolveInflow)
+                .toList();
 
-        persistenceService.update(match, "bet", betDefiniteType);
+        readyToSaveBets.forEach(bet -> betPersistenceService.multiSave(bet, List.of("result")));
+        measured.forEach(horse-> horsePersistenceService.update(horse, "avgSpeed", horse.getAvgSpeed()));
+        matchPersistenceService.update(calculatedWinner,"winner", calculatedWinner.getWinner());
 
         return true;
     }
-
 }

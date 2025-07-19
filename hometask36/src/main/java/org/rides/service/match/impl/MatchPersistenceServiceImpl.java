@@ -1,6 +1,7 @@
 package org.rides.service.match.impl;
 
 import org.hibernate.SessionFactory;
+import org.rides.entity.HorseEntity;
 import org.rides.utils.PersistenceService;
 import org.rides.entity.MatchEntity;
 import org.rides.service.match.interfaces.MatchPersistenceService;
@@ -25,10 +26,31 @@ public class MatchPersistenceServiceImpl implements MatchPersistenceService {
         var session = factory.openSession();
         var transaction = session.beginTransaction();
 
+        List<UUID> listOfId = entity.getHorse().stream()
+                .map(HorseEntity::getId)
+                .toList();
+
+        List<HorseEntity> horsesById = session.createQuery(
+                        "select h " +
+                                "from HorseEntity h " +
+                                "left join fetch h.match " +
+                                "where h.id IN :ids",
+                        HorseEntity.class)
+                .setParameter("ids", listOfId)
+                .getResultList();
+
+        horsesById.forEach(h->h.setMatch(entity));
+        entity.setHorse(horsesById);
+
         session.persist(entity);
 
         transaction.commit();
         session.close();
+    }
+
+    @Override
+    public void multiSave(MatchEntity entity, List<String> fields) {
+        updateService.multiUpdate(entity.getHorse(), fields);
     }
 
     @Override

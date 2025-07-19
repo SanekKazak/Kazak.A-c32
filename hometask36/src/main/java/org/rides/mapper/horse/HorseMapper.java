@@ -4,7 +4,7 @@ import org.mapstruct.AnnotateWith;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
-import org.rides.dto.HorseDto;
+import org.rides.dto.horse.HorseDto;
 import org.rides.entity.HorseEntity;
 import org.rides.entity.MatchEntity;
 import org.springframework.stereotype.Service;

@@ -34,74 +34,82 @@ public class PlayerPersistenceServiceImpl implements PlayerPersistenceService {
 
     @Override
     public PlayerEntity readByLogin(String login) {
-        Session session = factory.openSession();
-        Transaction transaction = session.beginTransaction();
+        try (Session session = factory.openSession()) {
+            Transaction transaction = session.beginTransaction();
 
-        var entity = session.createQuery(
-                        "from PlayerEntity p " +
-                                "left join fetch p.bet b " +
-                                "left join fetch b.horse " +
-                                "where p.login =: login",
-                        PlayerEntity.class)
-                .setParameter("login", login)
-                .getSingleResult();
+            var entity = session.createQuery(
+                            "from PlayerEntity p " +
+                                    "left join fetch p.bet b " +
+                                    "left join fetch b.horse " +
+                                    "where p.login = :login ",
+                            PlayerEntity.class)
+                    .setParameter("login", login)
+                    .getSingleResult();
 
-        transaction.commit();
-        session.close();
-        return entity;
+            transaction.commit();
+            return entity;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
     public PlayerEntity readById(UUID id) {
-        var session = factory.openSession();
-        var transaction = session.beginTransaction();
+        try (Session session = factory.openSession()) {
+            Transaction transaction = session.beginTransaction();
 
-        var entity = session.createQuery(
-                        "from PlayerEntity p " +
-                                "left join fetch p.bet b " +
-                                "left join fetch b.horse " +
-                                "where p.id =: id",
-                        PlayerEntity.class)
-                .setParameter("id", id)
-                .getSingleResult();
+            var entity = session.createQuery(
+                            "from PlayerEntity p " +
+                                    "left join fetch p.bet b " +
+                                    "left join fetch b.horse " +
+                                    "where p.id =: id",
+                            PlayerEntity.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
 
-        transaction.commit();
-        session.close();
-        return entity;
+            transaction.commit();
+            return entity;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
     public PlayerEntity readByToken(UUID token) {
-        var session = factory.openSession();
-        var transaction = session.beginTransaction();
+        try (Session session = factory.openSession()) {
+            Transaction transaction = session.beginTransaction();
 
-        var entity = session.createQuery(
-                        "from PlayerEntity " +
-                                "where token = :token ",
-                        PlayerEntity.class)
-                .setParameter("token", token)
-                .getSingleResult();
+            var entity = session.createQuery(
+                            "from PlayerEntity " +
+                                    "where token = :token ",
+                            PlayerEntity.class)
+                    .setParameter("token", token)
+                    .getSingleResult();
 
-        transaction.commit();
-        session.close();
-        return entity;
+            transaction.commit();
+            return entity;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
     public List<PlayerEntity> readAll() {
-        Session session = factory.openSession();
-        Transaction transaction = session.beginTransaction();
+        try (Session session = factory.openSession()) {
+            Transaction transaction = session.beginTransaction();
 
-        var entities = session.createQuery(
-                        "from PlayerEntity p " +
-                                "left join fetch p.bet b " +
-                                "left join fetch b.horse",
-                        PlayerEntity.class)
-                .getResultList();
+            var entities = session.createQuery(
+                            "from PlayerEntity p " +
+                                    "left join fetch p.bet b " +
+                                    "left join fetch b.horse",
+                            PlayerEntity.class)
+                    .getResultList();
 
-        transaction.commit();
-        session.close();
-        return entities;
+            transaction.commit();
+            return entities;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
