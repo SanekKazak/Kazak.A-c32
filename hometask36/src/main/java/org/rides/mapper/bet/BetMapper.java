@@ -8,7 +8,6 @@ import org.rides.dto.bet.BetDto;
 import org.rides.entity.BetEntity;
 import org.rides.entity.HorseEntity;
 import org.rides.entity.MatchEntity;
-import org.rides.entity.PlayerEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -18,44 +17,37 @@ import java.util.UUID;
 @AnnotateWith(value = Service.class)
 public interface BetMapper {
     @Mapping(target = "id", source = "id")
-    @Mapping(target = "playerId", source = "player")
     @Mapping(target = "horseId", source = "horse")
     @Mapping(target = "bet", source = "bet")
     @Mapping(target = "matchId", source = "match")
     @Mapping(target = "result", source = "result")
-    @Mapping(target = "created", source = "created")
     BetDto toDto(BetEntity entity);
 
     @Mapping(target = "id", source = "id")
-    @Mapping(target = "player", source = "playerId")
     @Mapping(target = "horse", source = "horseId")
     @Mapping(target = "bet", source = "bet")
     @Mapping(target = "match", source = "matchId")
     @Mapping(target = "result", source = "result")
-    @Mapping(target = "created", source = "created")
+    @Mapping(target = "player", ignore = true)
+    @Mapping(target = "created", ignore = true)
     @Mapping(target = "updated", ignore = true)
     BetEntity toEntity(BetDto dto);
 
-    default UUID fromPlayerToId(PlayerEntity entity){
+    default UUID fromMatchToId(MatchEntity entity) {
         return entity.getId();
     }
-    default PlayerEntity fromIdToPlayer(UUID id){
-        var entity = new PlayerEntity();
-        entity.setId(id);
-        return entity;
-    }
-    default UUID fromMatchToId(MatchEntity entity){
-        return entity.getId();
-    }
-    default MatchEntity fromIdToMatch(UUID id){
+
+    default MatchEntity fromIdToMatch(UUID id) {
         var entity = new MatchEntity();
         entity.setId(id);
         return entity;
     }
-    default UUID fromHorseToId(HorseEntity entity){
+
+    default UUID fromHorseToId(HorseEntity entity) {
         return entity.getId();
     }
-    default HorseEntity fromIdToHorse(UUID id){
+
+    default HorseEntity fromIdToHorse(UUID id) {
         var entity = new HorseEntity();
         entity.setId(id);
         return entity;

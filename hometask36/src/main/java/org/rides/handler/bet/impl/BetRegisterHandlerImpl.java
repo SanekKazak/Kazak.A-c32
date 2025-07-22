@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 public class BetRegisterHandlerImpl implements BetRegisterHandler {
     private final BetRegistrationMapper mapper;
     private final BetManagerService managerService;
+
     @Override
     public Boolean register(BetRegistrationDto dto) {
         BetEntity entity = mapper.toEntity(dto);

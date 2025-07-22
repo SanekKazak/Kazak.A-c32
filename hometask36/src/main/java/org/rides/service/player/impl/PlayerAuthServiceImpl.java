@@ -12,6 +12,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class PlayerAuthServiceImpl implements PlayerAuthService {
     private final PlayerPersistenceService persistenceService;
+
     @Override
     public PlayerEntity findByToken(UUID token) {
         return persistenceService.readByToken(token);

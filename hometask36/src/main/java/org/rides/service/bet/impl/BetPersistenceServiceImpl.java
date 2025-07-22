@@ -1,19 +1,19 @@
 package org.rides.service.bet.impl;
 
 import org.hibernate.SessionFactory;
+import org.rides.entity.BetEntity;
 import org.rides.entity.HorseEntity;
 import org.rides.entity.MatchEntity;
 import org.rides.entity.PlayerEntity;
-import org.rides.utils.PersistenceService;
-import org.rides.entity.BetEntity;
 import org.rides.service.bet.interfaces.BetPersistenceService;
+import org.rides.utils.PersistenceService;
 import org.rides.utils.PersistenceUpdateService;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.UUID;
 
-@Service
+@Repository
 public class BetPersistenceServiceImpl implements BetPersistenceService {
     private final SessionFactory factory;
     private final PersistenceUpdateService updateService;
@@ -81,7 +81,6 @@ public class BetPersistenceServiceImpl implements BetPersistenceService {
                         BetEntity.class)
                 .getResultList();
 
-        System.out.println();
         transaction.commit();
         session.close();
         return resultList;

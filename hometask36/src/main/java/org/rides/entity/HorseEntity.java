@@ -22,9 +22,9 @@ public class HorseEntity {
     @Id
     @UuidGenerator
     private UUID id;
-    @Column(name="avg_speed")
+    @Column(name = "avg_speed")
     private Double avgSpeed;
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
     @OneToMany(
             mappedBy = "winner",
@@ -61,29 +61,29 @@ public class HorseEntity {
         this.name = name;
     }
 
-    public void setAward(MatchEntity entity){
+    public void setAward(MatchEntity entity) {
         award.add(entity);
         entity.setWinner(this);
     }
 
-    public void setAward(List<MatchEntity> entity){
+    public void setAward(List<MatchEntity> entity) {
         award.addAll(entity);
     }
 
-    public void setBet(BetEntity entity){
+    public void setBet(BetEntity entity) {
         bet.add(entity);
         entity.setHorse(this);
     }
 
-    public void setBet(List<BetEntity> entity){
+    public void setBet(List<BetEntity> entity) {
         bet.addAll(entity);
     }
 
-    public void setMatch(MatchEntity entity){
+    public void setMatch(MatchEntity entity) {
         match.add(entity);
     }
 
-    public void setMatch(List<MatchEntity> entity){
+    public void setMatch(List<MatchEntity> entity) {
         match.addAll(entity);
     }
 }

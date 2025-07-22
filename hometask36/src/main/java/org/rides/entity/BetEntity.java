@@ -57,7 +57,7 @@ public class BetEntity {
         this.result = result;
     }
 
-    public enum ResultType{
+    public enum ResultType {
         WIN,
         LOSE,
         PROCESS

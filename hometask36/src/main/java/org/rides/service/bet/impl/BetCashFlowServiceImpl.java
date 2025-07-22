@@ -7,7 +7,6 @@ import org.rides.service.bet.interfaces.BetCashFlowService;
 import org.rides.service.bet.interfaces.BetPersistenceService;
 import org.rides.service.bet.interfaces.BetValidationService;
 import org.rides.service.player.interfaces.PlayerBalanceService;
-import org.rides.utils.BackendErrorExceptionProxy;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -23,8 +22,8 @@ public class BetCashFlowServiceImpl implements BetCashFlowService {
     public BetEntity resolveInflow(BetEntity bet) {
         BetEntity entity = betPersistenceService.read(bet.getId());
         entity.setResult(bet.getResult());
-        switch(entity.getResult()){
-            case WIN -> changerService.changeBalanceValue(entity.getPlayer(), (2)*entity.getBet());
+        switch (entity.getResult()) {
+            case WIN -> changerService.changeBalanceValue(entity.getPlayer(), (2) * entity.getBet());
             case PROCESS -> changerService.changeBalanceValue(entity.getPlayer(), entity.getBet());
             default -> {
                 return null;
@@ -35,14 +34,13 @@ public class BetCashFlowServiceImpl implements BetCashFlowService {
 
     @Override
     public Optional<BetEntity> resolveOutflow(BetEntity entity) {
-        BackendErrorExceptionProxy validate = validationService.validate(entity);
-        if(validate.isExist()){
+        if (!validationService.validate(entity)) {
             return Optional.empty();
         }
 
         PlayerEntity player = entity.getPlayer();
 
-        player.setBalance(player.getBalance()-entity.getBet());
+        player.setBalance(player.getBalance() - entity.getBet());
 
         return Optional.of(entity);
     }

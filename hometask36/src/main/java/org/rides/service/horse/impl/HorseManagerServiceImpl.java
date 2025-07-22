@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class HorseManagerServiceImpl implements HorseManagerService {
     private final HorsePersistenceService persistenceService;
+
     @Override
     public Boolean create(HorseEntity entity) {
         persistenceService.create(entity);

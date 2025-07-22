@@ -2,17 +2,17 @@ package org.rides.service.match.impl;
 
 import org.hibernate.SessionFactory;
 import org.rides.entity.HorseEntity;
-import org.rides.utils.PersistenceService;
 import org.rides.entity.MatchEntity;
 import org.rides.service.match.interfaces.MatchPersistenceService;
+import org.rides.utils.PersistenceService;
 import org.rides.utils.PersistenceUpdateService;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.UUID;
 
-@Service
-public class MatchPersistenceServiceImpl implements MatchPersistenceService {
+@Repository
+public class MatchPersistenceServiceImpl implements MatchPersistenceService{
     private final SessionFactory factory;
     private final PersistenceUpdateService updateService;
 

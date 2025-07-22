@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class PersistenceService {
     private final SessionFactory factory;
 
-    public PersistenceService(){
+    public PersistenceService() {
         var configuration = new Configuration();
         var properties = PersonalProperty.getProperties();
 

@@ -24,12 +24,13 @@ public interface MatchRegistrationMapper {
     @Mapping(target = "updated", ignore = true)
     MatchEntity toEntity(MatchRegistrationDto dto);
 
-    default List<HorseEntity> fromUUIDtoHorse(List<UUID> ids){
+    default List<HorseEntity> fromUUIDtoHorse(List<UUID> ids) {
         return ids.stream()
                 .map(this::toHorse)
                 .toList();
     }
-    default HorseEntity toHorse(UUID id){
+
+    default HorseEntity toHorse(UUID id) {
         var entity = new HorseEntity();
         entity.setId(id);
         return entity;

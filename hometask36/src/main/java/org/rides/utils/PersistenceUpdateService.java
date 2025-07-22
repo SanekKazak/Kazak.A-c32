@@ -91,9 +91,9 @@ public class PersistenceUpdateService {
                 clazz,
                 idInitMethodsCash.get(clazz).invoke(entity));
 
-        for(var valueEl : valuesFromEntity.entrySet()) {
-            for(var declaredEl : sortedFieldDeclaration.entrySet()) {
-                if(valueEl.getKey().getName().equals(declaredEl.getValue().getName())) {
+        for (var valueEl : valuesFromEntity.entrySet()) {
+            for (var declaredEl : sortedFieldDeclaration.entrySet()) {
+                if (valueEl.getKey().getName().equals(declaredEl.getValue().getName())) {
                     valueEl.getKey().invoke(mirror, valueEl.getValue());
                     break;
                 }

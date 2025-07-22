@@ -16,7 +16,8 @@ import java.util.*;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 public class MatchEntity {
     @Id
     @UuidGenerator
@@ -43,12 +44,12 @@ public class MatchEntity {
     @UpdateTimestamp
     private Instant updated;
 
-    public void setBet(BetEntity entity){
+    public void setBet(BetEntity entity) {
         bet.add(entity);
         entity.setMatch(this);
     }
 
-    public void setBet(List<BetEntity> entity){
+    public void setBet(List<BetEntity> entity) {
         bet.addAll(entity);
     }
 

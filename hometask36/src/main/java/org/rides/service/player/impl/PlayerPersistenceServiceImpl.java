@@ -3,15 +3,16 @@ package org.rides.service.player.impl;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.rides.utils.PersistenceService;
 import org.rides.entity.PlayerEntity;
 import org.rides.service.player.interfaces.PlayerPersistenceService;
+import org.rides.utils.PersistenceService;
 import org.rides.utils.PersistenceUpdateService;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import java.util.List;
+import java.util.UUID;
 
-@Service
+@Repository
 public class PlayerPersistenceServiceImpl implements PlayerPersistenceService {
     private final SessionFactory factory;
     private final PersistenceUpdateService updateService;

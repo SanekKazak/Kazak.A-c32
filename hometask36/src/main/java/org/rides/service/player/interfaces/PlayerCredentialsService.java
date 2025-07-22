@@ -6,5 +6,6 @@ import java.util.UUID;
 
 public interface PlayerCredentialsService {
     Boolean register(PlayerEntity entity);
+
     UUID authorize(PlayerEntity entity);
 }

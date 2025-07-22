@@ -27,23 +27,23 @@ public interface BetRegistrationMapper {
     @Mapping(target = "updated", ignore = true)
     BetEntity toEntity(BetRegistrationDto dto);
 
-    default PlayerEntity fromIdToPlayer(UUID token){
+    default PlayerEntity fromIdToPlayer(UUID token) {
         var entity = new PlayerEntity();
         entity.setToken(token);
         return entity;
     }
-    default UUID fromMatchToId(MatchEntity entity){
-        return entity.getId();
-    }
-    default MatchEntity fromIdToMatch(UUID id){
+
+    default MatchEntity fromIdToMatch(UUID id) {
         var entity = new MatchEntity();
         entity.setId(id);
         return entity;
     }
-    default UUID fromHorseToId(HorseEntity entity){
+
+    default UUID fromHorseToId(HorseEntity entity) {
         return entity.getId();
     }
-    default HorseEntity fromIdToHorse(UUID id){
+
+    default HorseEntity fromIdToHorse(UUID id) {
         var entity = new HorseEntity();
         entity.setId(id);
         return entity;

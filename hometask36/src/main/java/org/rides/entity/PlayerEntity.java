@@ -16,7 +16,8 @@ import java.util.UUID;
 @Table(name = "Player")
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 @ToString(exclude = "bet")
 public class PlayerEntity {
     @Id
@@ -30,11 +31,11 @@ public class PlayerEntity {
             fetch = FetchType.LAZY
     )
     private List<BetEntity> bet = new ArrayList<>();
-    @Column(name="login", unique = true)
+    @Column(name = "login", unique = true)
     private String login;
-    @Column(name="password")
+    @Column(name = "password")
     private String password;
-    @Column(name="balance")
+    @Column(name = "balance")
     private Integer balance = 0;
     @Enumerated(value = EnumType.STRING)
     @ColumnDefault("'USER'")
@@ -50,16 +51,16 @@ public class PlayerEntity {
         this.password = password;
     }
 
-    public void setBet(BetEntity entity){
+    public void setBet(BetEntity entity) {
         bet.add(entity);
         entity.setPlayer(this);
     }
 
-    public void setBet(List<BetEntity> entity){
+    public void setBet(List<BetEntity> entity) {
         bet.addAll(entity);
     }
 
-    public enum RoleType{
+    public enum RoleType {
         ADMIN,
         USER
     }

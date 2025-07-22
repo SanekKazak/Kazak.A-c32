@@ -17,13 +17,14 @@ public class BetManagerServiceImpl implements BetManagerService {
     private final BetPersistenceService persistenceService;
     private final PlayerAuthService authService;
     private final BetCashFlowService cashFlowService;
+
     @Override
     public Boolean create(BetEntity entity) {
         PlayerEntity playerByToken = authService.findByToken(entity.getPlayer().getToken());
         entity.setPlayer(playerByToken);
 
         Optional<BetEntity> betEntity = cashFlowService.resolveOutflow(entity);
-        if(betEntity.isEmpty()){
+        if (betEntity.isEmpty()) {
             return false;
         }
         BetEntity result = betEntity.get();

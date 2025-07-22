@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.rides.entity.BetEntity;
 
-import java.time.Instant;
 import java.util.UUID;
 
 @Setter
@@ -15,10 +14,12 @@ import java.util.UUID;
 @NoArgsConstructor
 public class BetDto {
     private UUID id;
-    private UUID playerId;
     private UUID horseId;
     private UUID matchId;
     private Integer bet;
-    private Instant created;
     private BetEntity.ResultType result;
+
+    public String getInfo() {
+        return " id:" + id + " horseId:" + horseId + " matchId:" + matchId + " bet:" + bet;
+    }
 }

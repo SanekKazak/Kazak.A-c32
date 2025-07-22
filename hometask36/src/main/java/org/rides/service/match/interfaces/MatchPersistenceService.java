@@ -19,4 +19,5 @@ public interface MatchPersistenceService {
     void delete(UUID id);
 
     void update(MatchEntity entity, String field, Object value);
+
 }
