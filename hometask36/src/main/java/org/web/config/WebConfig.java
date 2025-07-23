@@ -18,6 +18,4 @@ public class WebConfig implements WebMvcConfigurer{
         internalResourceViewResolver.setSuffix(".jsp");
         registry.viewResolver(internalResourceViewResolver);
     }
-
-
 }
