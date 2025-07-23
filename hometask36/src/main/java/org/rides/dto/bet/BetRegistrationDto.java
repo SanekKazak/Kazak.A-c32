@@ -14,8 +14,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BetRegistrationDto {
-    @NotNull(message = "token should be not null")
-    private UUID token;
     @NotNull(message = "horse id should be not null")
     private UUID horseId;
     @NotNull(message = "match id should be not null")

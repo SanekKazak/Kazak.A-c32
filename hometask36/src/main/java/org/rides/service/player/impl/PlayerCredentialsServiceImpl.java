@@ -16,7 +16,7 @@ public class PlayerCredentialsServiceImpl implements PlayerCredentialsService {
     private final PlayerCredentialsValidatorService validatorService;
 
     @Override
-    public UUID authorize(PlayerEntity entity) {
+    public PlayerEntity authorize(PlayerEntity entity) {
         PlayerEntity dbEntity = persistenceService.readByLogin(entity.getLogin());
         if (!dbEntity.getPassword().equals(entity.getPassword())) {
             return null;
@@ -24,7 +24,8 @@ public class PlayerCredentialsServiceImpl implements PlayerCredentialsService {
 
         UUID token = UUID.randomUUID();
         persistenceService.update(dbEntity, "token", token);
-        return token;
+        dbEntity.setToken(token);
+        return dbEntity;
     }
 
     @Override

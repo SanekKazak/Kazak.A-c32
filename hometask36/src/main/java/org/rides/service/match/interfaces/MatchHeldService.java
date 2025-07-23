@@ -1,7 +1,7 @@
 package org.rides.service.match.interfaces;
 
-import java.util.UUID;
+import org.rides.entity.MatchEntity;
 
 public interface MatchHeldService {
-    Boolean heldMatch(UUID id);
+    Boolean heldMatch(MatchEntity matchEntity);
 }

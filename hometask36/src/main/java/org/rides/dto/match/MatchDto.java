@@ -20,7 +20,9 @@ public class MatchDto {
         if (winnerId != null) {
             isPlayed = true;
         }
-        String horsesInfo = horses.stream().map(e -> e.getInfo()).collect(Collectors.joining("\n"));
+        String horsesInfo = horses.stream()
+                .map(HorseDto::getInfo)
+                .collect(Collectors.joining("\n"));
         return id + " is played:" + isPlayed + " horses:" + horsesInfo;
     }
 }

@@ -20,7 +20,7 @@ public class PlayerAuthorizationHandlerImpl implements PlayerAuthorizationHandle
     private final PlayerAuthService authService;
     private final PlayerDeAuthorizeService deAuthorizeService;
     @Override
-    public UUID authorize(PlayerCredentialsDto dto) {
+    public PlayerEntity authorize(PlayerCredentialsDto dto) {
         PlayerEntity entity = credentialsMapper.toEntity(dto);
         return credentialsService.authorize(entity);
     }

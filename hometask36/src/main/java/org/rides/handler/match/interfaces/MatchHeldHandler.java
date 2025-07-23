@@ -1,7 +1,7 @@
 package org.rides.handler.match.interfaces;
 
-import java.util.UUID;
+import org.rides.dto.match.MatchHeldDto;
 
 public interface MatchHeldHandler {
-    Boolean held(UUID id);
+    Boolean held(MatchHeldDto matchHeldDto);
 }

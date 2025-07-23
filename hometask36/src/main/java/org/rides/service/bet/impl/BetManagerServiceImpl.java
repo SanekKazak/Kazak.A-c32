@@ -2,7 +2,6 @@ package org.rides.service.bet.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.rides.entity.BetEntity;
-import org.rides.entity.PlayerEntity;
 import org.rides.service.bet.interfaces.BetCashFlowService;
 import org.rides.service.bet.interfaces.BetManagerService;
 import org.rides.service.bet.interfaces.BetPersistenceService;
@@ -20,9 +19,6 @@ public class BetManagerServiceImpl implements BetManagerService {
 
     @Override
     public Boolean create(BetEntity entity) {
-        PlayerEntity playerByToken = authService.findByToken(entity.getPlayer().getToken());
-        entity.setPlayer(playerByToken);
-
         Optional<BetEntity> betEntity = cashFlowService.resolveOutflow(entity);
         if (betEntity.isEmpty()) {
             return false;

@@ -14,7 +14,6 @@ import org.rides.service.match.interfaces.MatchPersistenceService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -27,8 +26,8 @@ public class MatchHeldServiceImpl implements MatchHeldService {
     private final BetCashFlowService resultPayService;
 
     @Override
-    public Boolean heldMatch(UUID id) {
-        MatchEntity match = matchPersistenceService.read(id);
+    public Boolean heldMatch(MatchEntity matchEntity) {
+        MatchEntity match = matchPersistenceService.read(matchEntity.getId());
         List<HorseEntity> measured = horseRunService.measureHorsesSpeed(match.getHorse());
         match.setHorse(measured);
 

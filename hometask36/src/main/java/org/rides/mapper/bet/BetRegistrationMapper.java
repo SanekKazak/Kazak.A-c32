@@ -8,7 +8,6 @@ import org.rides.dto.bet.BetRegistrationDto;
 import org.rides.entity.BetEntity;
 import org.rides.entity.HorseEntity;
 import org.rides.entity.MatchEntity;
-import org.rides.entity.PlayerEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -17,30 +16,20 @@ import java.util.UUID;
         componentModel = "spring")
 @AnnotateWith(value = Service.class)
 public interface BetRegistrationMapper {
-    @Mapping(target = "player", source = "token")
     @Mapping(target = "horse", source = "horseId")
     @Mapping(target = "bet", source = "bet")
     @Mapping(target = "match", source = "matchId")
+    @Mapping(target = "player", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "result", ignore = true)
     @Mapping(target = "created", ignore = true)
     @Mapping(target = "updated", ignore = true)
     BetEntity toEntity(BetRegistrationDto dto);
 
-    default PlayerEntity fromIdToPlayer(UUID token) {
-        var entity = new PlayerEntity();
-        entity.setToken(token);
-        return entity;
-    }
-
     default MatchEntity fromIdToMatch(UUID id) {
         var entity = new MatchEntity();
         entity.setId(id);
         return entity;
-    }
-
-    default UUID fromHorseToId(HorseEntity entity) {
-        return entity.getId();
     }
 
     default HorseEntity fromIdToHorse(UUID id) {

@@ -8,14 +8,16 @@ import org.rides.service.player.interfaces.PlayerAuthService;
 import org.rides.service.player.interfaces.PlayerBalanceService;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class PlayerUpdateBalanceHandlerImpl implements PlayerUpdateBalanceHandler {
     private final PlayerBalanceService changerService;
     private final PlayerAuthService authService;
     @Override
-    public Boolean updatePlayerBalance(PlayerBalanceUpdate update) {
-        PlayerEntity entity = authService.findByToken(update.getToken());
+    public Boolean updatePlayerBalance(PlayerBalanceUpdate update, UUID token) {
+        PlayerEntity entity = authService.findByToken(token);
         return changerService.changeBalanceValue(entity, update.getDelta());
     }
 }
