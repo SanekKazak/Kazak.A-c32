@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: hometask41
+example:
+  value:
+    count: 89
+  string:
+    name: example
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
