@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th = "http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<a href="?lang=en">En</a>
+<a href="?lang=ru">Ru</a>
+<div th:text="#{title}"/>
+
+<form action="" method="post" th:object="${film}">
+    <input type="text" th:field="*{name}">
+    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+    <button type="submit">generate</button>
+</form>
+
+
+<ul>
+    <li th:each="film : ${films}">
+        <p th:text="${film.getName()}">
+    </li>
+</ul>
+</body>
+</html>
