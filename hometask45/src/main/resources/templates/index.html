@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th = "http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form action="" method="post" th:object="${filter}">
+    <input type="text" th:text="contains" th:field="*{contains}">
+    <input type="number" th:text="to" th:field="*{to}">
+    <input type="number" th:text="from" th:field="*{from}">
+    <button type="submit">filter</button>
+</form>
+
+
+<ul>
+    <li th:each="film : ${films}">
+        <p th:text="${film.getName()}">
+    </li>
+</ul>
+</body>
+</html>
