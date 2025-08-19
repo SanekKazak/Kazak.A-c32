@@ -1,5 +1,7 @@
 package org.spring.hometask47blhotelcontrol.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.spring.hometask47blhotelcontrol.dto.HotelDto;
 import org.spring.hometask47blhotelcontrol.service.HotelService;
@@ -11,8 +13,9 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/hotel")
 @RequiredArgsConstructor
-public class MainController {
+public class HotelController {
     private final HotelService service;
+    private final ObjectMapper mapper;
 
     @GetMapping
     public List<HotelDto> getAll() {
@@ -20,7 +23,7 @@ public class MainController {
     }
 
     @PostMapping
-    public HotelDto registerHotel(@RequestBody HotelDto dto) {
+    public HotelDto registerHotel(@Valid @RequestBody HotelDto dto) {
         return service.create(dto);
     }
 
