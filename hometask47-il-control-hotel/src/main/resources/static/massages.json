@@ -2,5 +2,6 @@
     "808101":"'id' in delete request is missing",
     "808102":"no one available hotel to reserve",
     "808103":"place value in hotel is unreal",
-    "808104":"name in registration hotel-from is null"
+    "808104":"name in registration hotel-from is null",
+    "0": "unexpected error"
 }

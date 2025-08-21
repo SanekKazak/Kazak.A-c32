@@ -5,10 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class CommonError extends RuntimeException{
-    private String code;
+public class CommonErrors extends RuntimeException{
+    private List<CommonError> commonErrors;
 }

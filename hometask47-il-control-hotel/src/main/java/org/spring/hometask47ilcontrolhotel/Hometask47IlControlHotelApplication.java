@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.codec.ErrorDecoder;
 import org.spring.hometask47ilcontrolhotel.exception.CommonError;
+import org.spring.hometask47ilcontrolhotel.exception.CommonErrors;
+import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -33,13 +35,19 @@ public class Hometask47IlControlHotelApplication {
     public ErrorDecoder decoder(@Autowired ObjectMapper mapper) {
         return (s, e) -> {
             try {
-                List<CommonError> commonErrors = mapper.readValue(e.body().asInputStream(), new TypeReference<List<CommonError>>() {});
-                CommonError commonError = new CommonError();
-                commonError.setCommonErrors(commonErrors);
-                return commonError;
+                List<CommonError> detectedCommonErrors = mapper.readValue(e.body().asInputStream(), new TypeReference<List<CommonError>>() {});
+                return new CommonErrors(detectedCommonErrors);
             } catch (Exception ex) {
                 return ex;
             }
         };
+    }
+
+    @Bean
+    public GroupedOpenApi hotel(){
+        return GroupedOpenApi.builder()
+                .pathsToMatch("/hotel/**")
+                .group("hotel managment")
+                .build();
     }
 }

@@ -1,6 +1,8 @@
 package org.spring.hometask47blhotelcontrol.service;
 
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.spring.hometask47blhotelcontrol.dto.HotelDto;
 import org.spring.hometask47blhotelcontrol.entity.HotelEntity;
 import org.spring.hometask47blhotelcontrol.exception.CommonError;
@@ -17,12 +19,14 @@ import java.util.UUID;
 public class HotelService {
     private final HotelRepository repository;
     private final HotelMapper mapper;
+    private final Logger logger = LoggerFactory.getLogger("HotelService");
 
     public List<HotelDto> getAll(){
         List<HotelEntity> all = repository.findAll();
         if(all.isEmpty()){
             throw new CommonError("8081002");
         }
+        logger.info("method getAll() worked good");
         return mapper.toDtos(all);
     }
 
@@ -33,11 +37,13 @@ public class HotelService {
         }
         HotelEntity hotelEntity = byId.get();
         repository.delete(hotelEntity);
+        logger.info("method delete(UUID id) worked good");
         return mapper.toDto(hotelEntity);
     }
 
     public HotelDto create(HotelDto dto){
         HotelEntity entity = mapper.toEntity(dto);
+        logger.info("method create(HotelDto dto) worked good");
         return mapper.toDto(repository.save(entity));
     }
 }
