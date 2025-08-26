@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractAuthenticationFilterConfigurer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -27,7 +27,7 @@ public class Hometask50Application {
     public SecurityFilterChain chain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests(access -> {
                     access
-                            .requestMatchers("/user/all").permitAll()
+                            .requestMatchers("/user/all", "/user", "/user/register").permitAll()
                             .requestMatchers("/user/auth").authenticated()
                             .requestMatchers("/user/nobody").denyAll()
                             .requestMatchers("/user/read").hasAuthority("read")
@@ -35,7 +35,18 @@ public class Hometask50Application {
                             .anyRequest().authenticated()
                     ;
                 })
-                .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
+                .formLogin( cast ->
+                        cast
+                                .passwordParameter("password")
+                                .usernameParameter("username")
+                                .loginPage("/user")
+                                .loginProcessingUrl("/user/login")
+                )
+                .logout( cast ->
+                        cast.logoutUrl("/user/logout")
+                )
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(AbstractHttpConfigurer::disable)
                 .build();
     }
 }
